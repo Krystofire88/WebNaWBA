@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet">
+    <!-- <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
     <title>Document</title>
 </head>
 <body>
-    
+    <label for="xWidth">playing field width: </label>
+    <input type="number" name="xWidth" id="xWidth" min="1"><br>
+    <label for="yWidth">playing field height: </label>
+    <input type="number" name="yWidth" id="yWidth" min="1"><br>
+    <label for="bombs">amount of bombs: </label>
+    <input type="number" name="bombs" id="bombs" min="0"><br>
+    <output id="bomb%"></output>
+    <button onclick="generateField()">generate utopia</button>
+    <div id="playingField"></div>
 </body>
 </html>

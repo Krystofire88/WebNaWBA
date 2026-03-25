@@ -1,0 +1,15 @@
+.playBox {
+    width: 40px;
+    height: 40px;
+    background-color: #C0C0C0;
+    border-color: black;
+    border-width: 2px;
+    position:relative;
+    border-color: #E0E0E0;
+    border-style:outset;
+    box-sizing: border-box;
+}
+/* #playingField {
+    width: 20%;
+    height: 20%;
+} */
