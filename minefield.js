@@ -3,6 +3,7 @@ let xMax = null;
 let yMax = null;
 let bCount = null;
 let boxClicked = [0, 0];
+let firstClick = true;
 
 let playingField = null;
 let timeDisplay = null;
@@ -152,7 +153,10 @@ function initField() {
                 txt = "B";
             }
             box.innerText = txt;
+            if(firstClick)
+            {
             box.addEventListener("click", () => clickedBox(thisID));    
+            }
             playingField.appendChild(box);
         }
     }
@@ -160,6 +164,7 @@ function initField() {
 
 function clickedBox(id)
 {
+    firstClick = false;
     boxClicked = id;
     generateField();
 }
