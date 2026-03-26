@@ -2,12 +2,13 @@ let currentBoard = null;
 let xMax = null;
 let yMax = null;
 let bCount = null;
+let flagCount = null;
 let boxClicked = [0, 0];
 let firstClick = true;
 
 let playingField = null;
 let timeDisplay = null;
-let bombsLeft = null;
+let flagsLeft = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     let paramString = window.location.href.split('?')[1];
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "bombs":
                 bCount = pair[1];
+                flagCount = bCount;
                 break;
             default:
                 break;
@@ -29,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     playingField = document.getElementById("playingField");
     timeDisplay = document.getElementById("timeDisplay");
-    bombsLeft = document.getElementById("bombsLeft");
+    flagsLeft = document.getElementById("flagsLeft");
+    flagsLeft = bCount;
     timeDisplay.textContent = 0
     setInterval(() => {
         timeDisplay.textContent = Number(timeDisplay.textContent)+1;
@@ -144,7 +147,7 @@ function initField() {
             const box = document.createElement("div");
             box.className = "playBox";
             box.id = y * xMax + x;
-            let thisID = [x, y]; 
+            let thisID = [y, x]; 
             box.style.left = x * 40 + "px";
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
             let txt = currentBoard[y][x];
@@ -155,8 +158,9 @@ function initField() {
             box.innerText = txt;
             if(firstClick)
             {
-            box.addEventListener("click", () => clickedBox(thisID));    
+                box.addEventListener("click", () => clickedBox(thisID));    
             }
+                box.addEventListener("dblclick", () => makeFlag(thisID))
             playingField.appendChild(box);
         }
     }
@@ -167,6 +171,32 @@ function clickedBox(id)
     firstClick = false;
     boxClicked = id;
     generateField();
+}
+
+function makeFlag(id)
+{
+    let boxDiv = document.getElementById(id[0] * xMax + id[1])
+    if(currentBoard[id[0]][id[1]] < 14 && flagCount > 0)
+    {
+        console.log(currentBoard[id[0]][id[1]]);
+        currentBoard[id[0]][id[1]] += 0x10;
+        console.log(currentBoard[id[0]][id[1]]);
+        boxDiv.innerText = "F";
+        flagCount--;
+    }
+    else if(currentBoard[id[0]][id[1]] > 13)
+    {
+        console.log(currentBoard[id[0]][id[1]]);
+        currentBoard[id[0]][id[1]] -= 0x10;
+        console.log(currentBoard[id[0]][id[1]]);
+        let txt = currentBoard[id[0]][id[1]];
+        if(txt == -1)
+        {
+            txt = "B";
+        }
+        boxDiv.innerText = txt;
+        flagCount++;
+    }
 }
 
 function generateField() {
