@@ -9,14 +9,15 @@
     <title>Document</title>
 </head>
 <body>
-    <label for="xWidth">playing field width: </label>
-    <input type="number" name="xWidth" id="xWidth" min="1"><br>
-    <label for="yWidth">playing field height: </label>
-    <input type="number" name="yWidth" id="yWidth" min="1"><br>
-    <label for="bombs">amount of bombs: </label>
-    <input type="number" name="bombs" id="bombs" min="0"><br>
-    <output id="bomb%"></output>
-    <button onclick="generateField()">generate utopia</button>
-    <div id="playingField"></div>
+    <form action="minefield.html" method="get">
+        <label for="xWidth">playing field width: </label>
+        <input type="number" name="xWidth" id="xWidth" min="1" value="10"><br>
+        <label for="yWidth">playing field height: </label>
+        <input type="number" name="yWidth" id="yWidth" min="1" value="10"><br>
+        <label for="bombs">amount of bombs: </label>
+        <input type="number" name="bombs" id="bombs" min="0" value="25"><br>
+        <output id="bomb%"></output>
+        <input type="submit" value="generate utopia"></button>
+    </form>
 </body>
 </html>
