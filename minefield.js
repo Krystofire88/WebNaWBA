@@ -1,4 +1,4 @@
-let currentBoard = [];
+let currentBoard = null;
 let xMax = null;
 let yMax = null;
 let bCount = null;
@@ -28,12 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
     playingField = document.getElementById("playingField");
     timeDisplay = document.getElementById("timeDisplay");
     bombsLeft = document.getElementById("bombsLeft");
+    timeDisplay.textContent = 0
+    setInterval(() => {
+        timeDisplay.textContent = Number(timeDisplay.textContent)+1;
+    }, 1000);
     generateField();
 });
 
 
 
 function generateBombs() {
+    if (bCount > xMax*yMax-1) {
+        bCount = xMax*yMax-1;
+    }
     for (let i = 0; i < bCount; i++) {       
         const x = Math.floor(Math.random() * xMax)
         const y = Math.floor(Math.random() * yMax)
@@ -112,7 +119,7 @@ function fillNumbers() {
 }
 
 function generateBoard() {
-    //let currentBoard = [];
+    currentBoard = [];
     for (let i = 0; i < yMax; i++) {
         currentBoard.push([]);
     }
