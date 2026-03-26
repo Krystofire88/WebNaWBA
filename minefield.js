@@ -32,11 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function generateBombs() {
-    for (let i = 0; i < bCount; i++) {
+    for (let i = 0; i < bCount; i++) {       
         const x = Math.round(Math.random() * (xMax - 1))
         const y = Math.round(Math.random() * (yMax - 1))
+        if(currentBoard[x][y] == 0xFF)
+        {
+            i--;
+            continue;
+        }
         currentBoard[x][y] = 0xFF;
-    }
+    }    
 }
 
 function fillNumbers() {
@@ -72,6 +77,7 @@ function generateBoard() {
         }
     });
     generateBombs();
+    console.log(currentBoard);
     fillNumbers();
 }
 
