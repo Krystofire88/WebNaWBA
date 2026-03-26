@@ -2,6 +2,7 @@ let currentBoard = null;
 let xMax = null;
 let yMax = null;
 let bCount = null;
+let boxClicked = [0, 0];
 
 let playingField = null;
 let timeDisplay = null;
@@ -36,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
 function generateBombs() {
     if (bCount > xMax*yMax-1) {
         bCount = xMax*yMax-1;
@@ -44,12 +44,17 @@ function generateBombs() {
     for (let i = 0; i < bCount; i++) {       
         const x = Math.floor(Math.random() * xMax)
         const y = Math.floor(Math.random() * yMax)
-        if(currentBoard[x][y] == -1)
+        if(currentBoard[y][x] == -1)
         {
             i--;
             continue;
         }
-        currentBoard[x][y] = -1;
+        
+        if (x === boxClicked[0] && y === boxClicked[1]) {
+            i--;
+            continue;
+        }
+        currentBoard[y][x] = -1;
     }    
 }
 
@@ -115,7 +120,6 @@ function fillNumbers() {
             currentBoard[y][x] = bombsNear;
         }
     }
-
 }
 
 function generateBoard() {
@@ -139,6 +143,7 @@ function initField() {
             const box = document.createElement("div");
             box.className = "playBox";
             box.id = y * xMax + x;
+            let thisID = [x, y]; 
             box.style.left = x * 40 + "px";
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
             let txt = currentBoard[y][x];
@@ -147,10 +152,16 @@ function initField() {
                 txt = "B";
             }
             box.innerText = txt;
-            box.addEventListener("click",  generateField);    
+            box.addEventListener("click", () => clickedBox(thisID));    
             playingField.appendChild(box);
         }
     }
+}
+
+function clickedBox(id)
+{
+    boxClicked = id;
+    generateField();
 }
 
 function generateField() {
