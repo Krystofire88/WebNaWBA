@@ -150,27 +150,40 @@ function initField() {
             let thisID = [y, x]; 
             box.style.left = x * 40 + "px";
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
-            let txt = currentBoard[y][x];
-            if(txt == -1)
-            {
-                txt = "B";
-            }
-            box.innerText = txt;
             if(firstClick)
             {
-                box.addEventListener("click", () => clickedBox(thisID));    
+                box.addEventListener("click", () => clickedReavealBox(thisID));    
             }
-                box.addEventListener("dblclick", () => makeFlag(thisID))
+            else
+            {
+                box.addEventListener("click", () => clickedBox(thisID));  
+                let txt = currentBoard[y][x];
+                if(txt == -1)
+                {
+                    txt = "B";
+                }
+                box.innerText = txt;
+            }
+            box.addEventListener("dblclick", () => makeFlag(thisID))
             playingField.appendChild(box);
         }
     }
 }
 
-function clickedBox(id)
+function clickedReavealBox(id)
 {
     firstClick = false;
     boxClicked = id;
     generateField();
+}
+
+function clickedBox(id)
+{
+    if(currentBoard[id[0]][id[1]] == -1)
+    {
+        window.alert("GAME OVER");
+        location.reload();
+    }
 }
 
 function makeFlag(id)
@@ -178,17 +191,13 @@ function makeFlag(id)
     let boxDiv = document.getElementById(id[0] * xMax + id[1])
     if(currentBoard[id[0]][id[1]] < 14 && flagCount > 0)
     {
-        console.log(currentBoard[id[0]][id[1]]);
         currentBoard[id[0]][id[1]] += 0x10;
-        console.log(currentBoard[id[0]][id[1]]);
         boxDiv.innerText = "F";
         flagCount--;
     }
     else if(currentBoard[id[0]][id[1]] > 13)
     {
-        console.log(currentBoard[id[0]][id[1]]);
         currentBoard[id[0]][id[1]] -= 0x10;
-        console.log(currentBoard[id[0]][id[1]]);
         let txt = currentBoard[id[0]][id[1]];
         if(txt == -1)
         {
