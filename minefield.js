@@ -31,49 +31,94 @@ document.addEventListener("DOMContentLoaded", () => {
     generateField();
 });
 
+
+
 function generateBombs() {
     for (let i = 0; i < bCount; i++) {       
-        const x = Math.round(Math.random() * (xMax - 1))
-        const y = Math.round(Math.random() * (yMax - 1))
-        if(currentBoard[x][y] == 0xFF)
+        const x = Math.floor(Math.random() * xMax)
+        const y = Math.floor(Math.random() * yMax)
+        if(currentBoard[x][y] == -1)
         {
             i--;
             continue;
         }
-        currentBoard[x][y] = 0xFF;
+        currentBoard[x][y] = -1;
     }    
 }
 
 function fillNumbers() {
     for (let y = 0; y < yMax; y++) {
         for (let x = 0; x < xMax; x++) {
+            if(currentBoard[y][x] == -1)
+            {
+                continue;
+            }
             let bombsNear = 0;
-            if (x == 0) {
-
-            } else if (x == xMax-1) {
-                
-            } else {
-
+            for(let i = 0; i < 8; i++)
+            {
+                let checkX = 0;
+                let checkY = 0;
+                switch(i)
+                {
+                    case 0:
+                        checkY = -1;
+                        checkX = -1;
+                        break;
+                    case 1:
+                        checkY = -1;
+                        checkX =  0;
+                        break;
+                    case 2:
+                        checkY = -1;
+                        checkX = +1;
+                        break;
+                    case 3:
+                        checkY =  0;
+                        checkX = +1;
+                        break;
+                    case 4:
+                        checkY = +1;
+                        checkX = +1;
+                        break;
+                    case 5:
+                        checkY = +1;
+                        checkX =  0;
+                        break;
+                    case 6:
+                        checkY = +1;
+                        checkX = -1;
+                        break;
+                    case 7:
+                        checkY =  0;
+                        checkX = -1;
+                        break;
+                    default:
+                        checkX =  0;
+                        checkY =  0;
+                        break;
+                }
+                if(currentBoard[y + checkY]?.[x + checkX] != null) // '?.' <= poradilo chatGPT  
+                {
+                    if(currentBoard[y + checkY][x + checkX] == -1)
+                    {
+                        bombsNear++;
+                    }
+                }
             }
-            if (y == 0) {
-
-            } else if (x == xMax-1) {
-                
-            } else {
-                
-            }
+            currentBoard[y][x] = bombsNear;
         }
     }
 
 }
 
 function generateBoard() {
+    //let currentBoard = [];
     for (let i = 0; i < yMax; i++) {
         currentBoard.push([]);
     }
     currentBoard.forEach(col => {
         for (let i = 0; i < xMax; i++) {
-            col.push(0);
+            col.push(0);    
         }
     });
     generateBombs();
@@ -89,12 +134,23 @@ function initField() {
             box.id = y * xMax + x;
             box.style.left = x * 40 + "px";
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
+            let txt = currentBoard[y][x];
+            if(txt == -1)
+            {
+                txt = "B";
+            }
+            box.innerText = txt;
+            box.addEventListener("click",  generateField);    
             playingField.appendChild(box);
         }
     }
 }
 
 function generateField() {
+    let len = playingField.children.length;
+    for (let i = 0; i < len; i++) {
+        playingField.children[0].remove();
+    }
     generateBoard();
     initField();
 }
