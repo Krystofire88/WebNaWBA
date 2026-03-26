@@ -156,6 +156,7 @@ function initField() {
             }
             else
             {
+                box.addEventListener("contextmenu", (e) => {e.preventDefault(); makeFlag(thisID);}); // <== "e.preventDefault();" chatGPT code 
                 box.addEventListener("click", () => clickedBox(thisID));  
                 let txt = currentBoard[y][x];
                 if(txt == -1)
@@ -163,8 +164,7 @@ function initField() {
                     txt = "B";
                 }
                 box.innerText = txt;
-            }
-            box.addEventListener("dblclick", () => makeFlag(thisID))
+            }            
             playingField.appendChild(box);
         }
     }
