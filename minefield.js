@@ -10,7 +10,23 @@ let playingField = null;
 let timeDisplay = null;
 let flagsLeft = null;
 
-const bomb = 0x09;
+const bombNum = 0x09;
+
+class Tile
+{
+    isUncovered = false;
+    isBomb;
+    value;
+    x;
+    y;
+    constructor(y, x, isBomb, value)
+    {
+        this.x = x;
+        this.y = y;
+        this.isBomb = isBomb;
+        this.value = value;
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     let paramString = window.location.href.split('?')[1];
@@ -50,7 +66,7 @@ function generateBombs() {
     for (let i = 0; i < bCount; i++) {
         const x = Math.floor(Math.random() * xMax)
         const y = Math.floor(Math.random() * yMax)
-        if (currentBoard[y][x] == bomb) {
+        if (currentBoard[y][x].isBomb) {
             i--;
             continue;
         }
@@ -59,6 +75,7 @@ function generateBombs() {
             i--;
             continue;
         }
+        bomb = new Tile(y,x,true, bombNum)
         currentBoard[y][x] = bomb;
     }
 }
@@ -66,7 +83,7 @@ function generateBombs() {
 function fillNumbers() {
     for (let y = 0; y < yMax; y++) {
         for (let x = 0; x < xMax; x++) {
-            if (currentBoard[y][x] == bomb) {
+            if (currentBoard[y][x].isBomb) {
                 continue;
             }
             let bombsNear = 0;
@@ -113,12 +130,13 @@ function fillNumbers() {
                 }
                 if (currentBoard[y + checkY]?.[x + checkX] != null) // '?.' <= poradilo chatGPT  
                 {
-                    if (currentBoard[y + checkY][x + checkX] == bomb) {
+                    if (currentBoard[y + checkY][x + checkX].isBomb) {
                         bombsNear++;
                     }
                 }
             }
-            currentBoard[y][x] = bombsNear;
+            tile = new Tile(y,x,false,bombsNear);
+            currentBoard[y][x] = tile;
         }
     }
 }
@@ -153,12 +171,8 @@ function initField() {
             else {
                 box.addEventListener("contextmenu", (e) => { e.preventDefault(); makeFlag(thisID); }); // <== "e.preventDefault();" chatGPT code 
                 box.addEventListener("click", () => clickedBox(thisID));
-                let txt = currentBoard[y][x];
-                if (txt == bomb) {
-                    txt = "B";
-                }
-                box.innerText = txt;
             }
+            box.innerText = " ";
             playingField.appendChild(box);
         }
     }
@@ -168,34 +182,75 @@ function clickedRevealBox(id) {
     firstClick = false;
     boxClicked = id;
     generateField();
+    currentBoard[id[0]][id[1]].isUncovered = true;
+    regenBoard(false);
 }
 
 function clickedBox(id) {
-    if (currentBoard[id[0]][id[1]] == bomb) {
-        window.alert("GAME OVER");
-        location.reload();
+    if (currentBoard[id[0]][id[1]].isBomb) {
+        regenBoard(true);
+        setTimeout(() => { // <== ChatGPT poradilo
+            window.alert("GAME OVER");
+            location.reload();
+        }, 10);
+    }
+    else if (currentBoard[id[0]][id[1]].isUncovered == false)
+    {
+        currentBoard[id[0]][id[1]].isUncovered = true;
+        regenBoard(false);
+    }
+}
+
+function regenBoard(explode)
+{
+    if(explode)
+    {
+        for (let y = 0; y < yMax; y++)
+        {
+            for (let x = 0; x < xMax; x++)
+            {
+                if (currentBoard[y][x].isBomb)
+                {
+                    currentBoard[y][x].isUncovered = true;
+                    if(currentBoard[y][x].value == 25)
+                    {
+                        currentBoard[y][x].value = bombNum;
+                    }
+                }
+            }
+        }
+    }
+    for (let y = 0; y < yMax; y++) 
+    {
+        for (let x = 0; x < xMax; x++)
+        {
+            let txt = currentBoard[y][x].value;
+            if (txt == bombNum) {
+                txt = "B";
+            }
+            if(currentBoard[y][x].isUncovered)
+            {
+                playingField.children[y * xMax + x].innerText = txt;
+            }
+        }
     }
 }
 
 function makeFlag(id) {
     let boxDiv = document.getElementById(id[0] * xMax + id[1])
-    if ((currentBoard[id[0]][id[1]] & 0x30) == 0 && flagCount > 0) {
-        currentBoard[id[0]][id[1]] += 0x10;
+    if ((currentBoard[id[0]][id[1]].value & 0x30) == 0 && flagCount > 0 && !currentBoard[id[0]][id[1]].isUncovered) {
+        currentBoard[id[0]][id[1]].value += 0x10;
         boxDiv.innerText = "F";
         flagCount--;
-        console.log(currentBoard[id[0]][id[1]])
+        console.log(currentBoard[id[0]][id[1]].value)
     }
-    else if ((currentBoard[id[0]][id[1]] & 0x30) == 16) {
-        currentBoard[id[0]][id[1]] -= 0x10;
-        let txt = currentBoard[id[0]][id[1]];
-        if (txt == bomb) {
-            txt = "B";
-        }
-        boxDiv.innerText = txt;
+    else if ((currentBoard[id[0]][id[1]].value & 0x30) == 16) {
+        currentBoard[id[0]][id[1]].value -= 0x10;
+boxDiv.innerText = " ";
         flagCount++;
     } else {
-        console.warn(currentBoard[id[0]][id[1]])
-        console.warn((currentBoard[id[0]][id[1]] & 0x10))
+        console.warn(currentBoard[id[0]][id[1]].value)
+        console.warn((currentBoard[id[0]][id[1].value] & 0x10))
     }
 }
 
