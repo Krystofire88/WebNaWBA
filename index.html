@@ -11,18 +11,35 @@
 </head>
 
 <body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,0.46fr))] ">
-    <h1 class="font-[Minesweeper] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center md:text-9xl">
+    <h1
+        class="font-[Minesweeper] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center md:text-9xl">
         Minesweeper</h1>
-    <div class="bg-[#7E2828] rounded-2xl row-start-5 row-span-11 col-span-16 col-start-7">
+    <div class="bg-[#7E2828] rounded-2xl row-start-5 row-span-11 col-span-16 col-start-7 flex-1">
         <form action="minefield.html" method="get">
-            <label for="xWidth">playing field width: </label>
-            <input type="number" name="xWidth" id="xWidth" min="1" value="10"><br>
-            <label for="yWidth">playing field height: </label>
-            <input type="number" name="yWidth" id="yWidth" min="1" value="10"><br>
-            <label for="bombs">amount of bombs: </label>
-            <input type="number" name="bombs" id="bombs" min="0" value="25"><br>
+            <div class="flex flex-row mt-[5vh]">
+            <div class="bg-[#f8f2dc] ml-[5%] mr-[1.5%] h-[24.5vh] mb-[2vh] rounded-lg">timmerclub</div>
+
+            <div class="flex-1 flex-col">
+                <div class="bg-[#f8f2dc] mr-[5%] h-[11.5vh] mb-[1.5vh] rounded-lg">
+                    <label for="bombs">amount of bombs: </label>
+                    <input type="number" name="bombs" id="bombs" min="0" value="25">
+                </div>
+
+                <div class="bg-[#f8f2dc] mr-[5%] h-[11.5vh] mb-[2.75vh] rounded-lg">
+                    <label for="xWidth">playing field width: </label>
+                    <input type="number" name="xWidth" id="xWidth" min="1" value="10">
+                    <label for="yWidth">playing field height: </label>
+                    <input type="number" name="yWidth" id="yWidth" min="1" value="10">
+                </div>
+            </div></div>
+
+            <div class="bg-[#e4aea2] mx-[5%] h-[7vh] mb-[2vh] rounded-lg">bgm</div>
+
+
+
             <output id="bomb%"></output>
-            <input type="submit" value="generate utopia"></button>
+
+            <input type="submit" value="generate utopia" class="bg-[#f8f2dc] mx-[5%] h-[16vh] my-[2vh] rounded-2xl">
         </form>
     </div>
 
