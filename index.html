@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
     <title>Document</title>
 </head>
-<body>
-    <form action="minefield.html" method="get">
-        <label for="xWidth">playing field width: </label>
-        <input type="number" name="xWidth" id="xWidth" min="1" value="10"><br>
-        <label for="yWidth">playing field height: </label>
-        <input type="number" name="yWidth" id="yWidth" min="1" value="10"><br>
-        <label for="bombs">amount of bombs: </label>
-        <input type="number" name="bombs" id="bombs" min="0" value="25"><br>
-        <output id="bomb%"></output>
-        <input type="submit" value="generate utopia"></button>
-    </form>
+
+<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,0.46fr))] ">
+    <h1 class="font-[Minesweeper] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center md:text-9xl">
+        Minesweeper</h1>
+    <div class="bg-[#7E2828] rounded-2xl row-start-5 row-span-11 col-span-16 col-start-7">
+        <form action="minefield.html" method="get">
+            <label for="xWidth">playing field width: </label>
+            <input type="number" name="xWidth" id="xWidth" min="1" value="10"><br>
+            <label for="yWidth">playing field height: </label>
+            <input type="number" name="yWidth" id="yWidth" min="1" value="10"><br>
+            <label for="bombs">amount of bombs: </label>
+            <input type="number" name="bombs" id="bombs" min="0" value="25"><br>
+            <output id="bomb%"></output>
+            <input type="submit" value="generate utopia"></button>
+        </form>
+    </div>
+
 </body>
+
 </html>

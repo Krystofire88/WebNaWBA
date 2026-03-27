@@ -10,6 +10,8 @@ let playingField = null;
 let timeDisplay = null;
 let flagsLeft = null;
 
+const bomb = 0x09;
+
 document.addEventListener("DOMContentLoaded", () => {
     let paramString = window.location.href.split('?')[1];
     let queryString = new URLSearchParams(paramString);
@@ -35,61 +37,57 @@ document.addEventListener("DOMContentLoaded", () => {
     flagsLeft = bCount;
     timeDisplay.textContent = 0
     setInterval(() => {
-        timeDisplay.textContent = Number(timeDisplay.textContent)+1;
+        timeDisplay.textContent = Number(timeDisplay.textContent) + 1;
     }, 1000);
     generateField();
 });
 
 
 function generateBombs() {
-    if (bCount > xMax*yMax-1) {
-        bCount = xMax*yMax-1;
+    if (bCount > xMax * yMax - 1) {
+        bCount = xMax * yMax - 1;
     }
-    for (let i = 0; i < bCount; i++) {       
+    for (let i = 0; i < bCount; i++) {
         const x = Math.floor(Math.random() * xMax)
         const y = Math.floor(Math.random() * yMax)
-        if(currentBoard[y][x] == -1)
-        {
+        if (currentBoard[y][x] == bomb) {
             i--;
             continue;
         }
-        
+
         if (y === boxClicked[0] && x === boxClicked[1]) {
             i--;
             continue;
         }
-        currentBoard[y][x] = -1;
-    }    
+        currentBoard[y][x] = bomb;
+    }
 }
 
 function fillNumbers() {
     for (let y = 0; y < yMax; y++) {
         for (let x = 0; x < xMax; x++) {
-            if(currentBoard[y][x] == -1)
-            {
+            if (currentBoard[y][x] == bomb) {
                 continue;
             }
             let bombsNear = 0;
-            for(let i = 0; i < 8; i++)
-            {
+            for (let i = 0; i < 8; i++) {
                 let checkX = 0;
                 let checkY = 0;
-                switch(i)
-                {
+                switch (i) {
                     case 0:
                         checkY = -1;
                         checkX = -1;
                         break;
                     case 1:
                         checkY = -1;
-                        checkX =  0;
+                        checkX = 0;
                         break;
                     case 2:
                         checkY = -1;
                         checkX = +1;
                         break;
                     case 3:
-                        checkY =  0;
+                        checkY = 0;
                         checkX = +1;
                         break;
                     case 4:
@@ -98,25 +96,24 @@ function fillNumbers() {
                         break;
                     case 5:
                         checkY = +1;
-                        checkX =  0;
+                        checkX = 0;
                         break;
                     case 6:
                         checkY = +1;
                         checkX = -1;
                         break;
                     case 7:
-                        checkY =  0;
+                        checkY = 0;
                         checkX = -1;
                         break;
                     default:
-                        checkX =  0;
-                        checkY =  0;
+                        checkX = 0;
+                        checkY = 0;
                         break;
                 }
-                if(currentBoard[y + checkY]?.[x + checkX] != null) // '?.' <= poradilo chatGPT  
+                if (currentBoard[y + checkY]?.[x + checkX] != null) // '?.' <= poradilo chatGPT  
                 {
-                    if(currentBoard[y + checkY][x + checkX] == -1)
-                    {
+                    if (currentBoard[y + checkY][x + checkX] == bomb) {
                         bombsNear++;
                     }
                 }
@@ -133,7 +130,7 @@ function generateBoard() {
     }
     currentBoard.forEach(col => {
         for (let i = 0; i < xMax; i++) {
-            col.push(0);    
+            col.push(0);
         }
     });
     generateBombs();
@@ -147,64 +144,58 @@ function initField() {
             const box = document.createElement("div");
             box.className = "playBox";
             box.id = y * xMax + x;
-            let thisID = [y, x]; 
+            let thisID = [y, x];
             box.style.left = x * 40 + "px";
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
-            if(firstClick)
-            {
-                box.addEventListener("click", () => clickedRevealBox(thisID));    
+            if (firstClick) {
+                box.addEventListener("click", () => clickedRevealBox(thisID));
             }
-            else
-            {
-                box.addEventListener("contextmenu", (e) => {e.preventDefault(); makeFlag(thisID);}); // <== "e.preventDefault();" chatGPT code 
-                box.addEventListener("click", () => clickedBox(thisID));  
+            else {
+                box.addEventListener("contextmenu", (e) => { e.preventDefault(); makeFlag(thisID); }); // <== "e.preventDefault();" chatGPT code 
+                box.addEventListener("click", () => clickedBox(thisID));
                 let txt = currentBoard[y][x];
-                if(txt == -1)
-                {
+                if (txt == bomb) {
                     txt = "B";
                 }
                 box.innerText = txt;
-            }            
+            }
             playingField.appendChild(box);
         }
     }
 }
 
-function clickedRevealBox(id)
-{
+function clickedRevealBox(id) {
     firstClick = false;
     boxClicked = id;
     generateField();
 }
 
-function clickedBox(id)
-{
-    if(currentBoard[id[0]][id[1]] == -1)
-    {
+function clickedBox(id) {
+    if (currentBoard[id[0]][id[1]] == bomb) {
         window.alert("GAME OVER");
         location.reload();
     }
 }
 
-function makeFlag(id)
-{
+function makeFlag(id) {
     let boxDiv = document.getElementById(id[0] * xMax + id[1])
-    if(currentBoard[id[0]][id[1]] < 14 && flagCount > 0)
-    {
+    if ((currentBoard[id[0]][id[1]] & 0x30) == 0 && flagCount > 0) {
         currentBoard[id[0]][id[1]] += 0x10;
         boxDiv.innerText = "F";
         flagCount--;
+        console.log(currentBoard[id[0]][id[1]])
     }
-    else if(currentBoard[id[0]][id[1]] > 13)
-    {
+    else if ((currentBoard[id[0]][id[1]] & 0x30) == 16) {
         currentBoard[id[0]][id[1]] -= 0x10;
         let txt = currentBoard[id[0]][id[1]];
-        if(txt == -1)
-        {
+        if (txt == bomb) {
             txt = "B";
         }
         boxDiv.innerText = txt;
         flagCount++;
+    } else {
+        console.warn(currentBoard[id[0]][id[1]])
+        console.warn((currentBoard[id[0]][id[1]] & 0x10))
     }
 }
 
