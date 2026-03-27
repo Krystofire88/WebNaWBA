@@ -54,7 +54,7 @@ function generateBombs() {
             continue;
         }
         
-        if (x === boxClicked[0] && y === boxClicked[1]) {
+        if (y === boxClicked[0] && x === boxClicked[1]) {
             i--;
             continue;
         }
@@ -152,7 +152,7 @@ function initField() {
             box.style.top = (-y) * (40 * (xMax - 1)) + (-x) * 40 + "px";
             if(firstClick)
             {
-                box.addEventListener("click", () => clickedReavealBox(thisID));    
+                box.addEventListener("click", () => clickedRevealBox(thisID));    
             }
             else
             {
@@ -170,7 +170,7 @@ function initField() {
     }
 }
 
-function clickedReavealBox(id)
+function clickedRevealBox(id)
 {
     firstClick = false;
     boxClicked = id;
