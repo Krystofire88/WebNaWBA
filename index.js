@@ -8,7 +8,7 @@ function bombPercent() {
     if (Number(bombs.value) > Number(bombs.max)) {
         bombs.value = bombs.max;
     }
-    document.getElementById("bomb%").innerHTML = "the mine field will be " + (bombs.value / (xWidth.value * yWidth.value) * 100).toFixed(2) + "% bombs or less";
+    document.getElementById("bomb%").innerHTML = "the mine field will be " + (bombs.value / (xWidth.value * yWidth.value) * 100).toFixed(2) + "% bombs";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

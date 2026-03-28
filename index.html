@@ -10,22 +10,23 @@
     <title>Document</title>
 </head>
 
-<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,0.46fr))] ">
+<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,6.348vh))] overflow-hidden">
     <h1
-        class="font-[Minesweeper] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center md:text-9xl">
+        class="font-[Minesweeper] ml-[0.2%] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center mt-[0.45vh] md:text-9xl">
         Minesweeper</h1>
-    <div class="bg-[#7E2828] rounded-2xl row-start-5 row-span-11 col-span-16 col-start-7 flex-1">
+    <div class="bg-[#7E2828] rounded-2xl row-start-5 row-span-11 col-span-16 col-start-7 flex-1 h-[95.8%] ml-[0.4%] w-[99.25%] mt-[-1vh]">
         <form action="minefield.html" method="get">
             <div class="flex flex-row mt-[5vh]">
-            <div class="bg-[#f8f2dc] ml-[5%] mr-[1.5%] h-[24.5vh] mb-[2vh] rounded-lg">timmerclub</div>
+            <div class="bg-[#f8f2dc] ml-[4.5%] mr-[1.33%] h-[24.85vh] mt-[-0.1vh] mb-[2vh] w-[16.55%] rounded-lg">timmerclub</div>
 
             <div class="flex-1 flex-col">
-                <div class="bg-[#f8f2dc] mr-[5%] h-[11.5vh] mb-[1.5vh] rounded-lg">
+                <div class="bg-[#f8f2dc] mr-[4.5%] h-[11.7vh] mt-[-0.1vh] mb-[1.4vh] w-[94.07%] rounded-lg">
                     <label for="bombs">amount of bombs: </label>
                     <input type="number" name="bombs" id="bombs" min="0" value="25">
+                    <output id="bomb%"></output>
                 </div>
 
-                <div class="bg-[#f8f2dc] mr-[5%] h-[11.5vh] mb-[2.75vh] rounded-lg">
+                <div class="bg-[#f8f2dc] mr-[4.5%] h-[11.71vh] mb-[2.75vh] w-[94.07%] rounded-lg">
                     <label for="xWidth">playing field width: </label>
                     <input type="number" name="xWidth" id="xWidth" min="1" value="10">
                     <label for="yWidth">playing field height: </label>
@@ -33,13 +34,13 @@
                 </div>
             </div></div>
 
-            <div class="bg-[#e4aea2] mx-[5%] h-[7vh] mb-[2vh] rounded-lg">bgm</div>
+            <div class="bg-[#e4aea2] ml-[4.5%] h-[10.1vh] mb-[0.75vh] rounded-lg w-[90.9%]">bgm</div>
 
 
 
-            <output id="bomb%"></output>
+            
 
-            <input type="submit" value="generate utopia" class="bg-[#f8f2dc] mx-[5%] h-[16vh] my-[2vh] rounded-2xl">
+            <input type="submit" value="generate utopia" class="bg-[#f8f2dc] text-[#7E2828] ml-[4.5%] h-[16.62vh] my-[2vh] w-[90.95%] rounded-2xl ">
         </form>
     </div>
 
