@@ -183,6 +183,7 @@ function clickedRevealBox(id) {
     boxClicked = id;
     generateField();
     currentBoard[id[0]][id[1]].isUncovered = true;
+    revealNear(id);
     regenBoard(false);
 }
 
@@ -197,7 +198,68 @@ function clickedBox(id) {
     else if (currentBoard[id[0]][id[1]].isUncovered == false)
     {
         currentBoard[id[0]][id[1]].isUncovered = true;
+        revealNear(id)
         regenBoard(false);
+    }
+}
+
+function revealNear(id)
+{
+    if(currentBoard[id[0]][id[1]].value == 0)
+    {
+        for (let i = 0; i < 8; i++) {
+            let checkX = 0;
+            let checkY = 0;
+            switch (i) {
+                case 0:
+                    checkY = -1;
+                    checkX = -1;
+                    break;
+                case 1:
+                    checkY = -1;
+                    checkX = 0;
+                    break;
+                case 2:
+                    checkY = -1;
+                    checkX = +1;
+                    break;
+                case 3:
+                    checkY = 0;
+                    checkX = +1;
+                    break;
+                case 4:
+                    checkY = +1;
+                    checkX = +1;
+                    break;
+                case 5:
+                    checkY = +1;
+                    checkX = 0;
+                    break;
+                case 6:
+                    checkY = +1;
+                    checkX = -1;
+                    break;
+                case 7:
+                    checkY = 0;
+                    checkX = -1;
+                    break;
+                default:
+                    checkX = 0;
+                    checkY = 0;
+                    break;
+            }
+            if(currentBoard[id[0] + checkY]?.[id[1] + checkX] != null)
+            {
+                if (!currentBoard[id[0] + checkY][id[1] + checkX].isUncovered)
+                {
+                    currentBoard[id[0] + checkY][id[1] + checkX].isUncovered = true;
+                    if (currentBoard[id[0] + checkY][id[1] + checkX].value == 0) {
+                        let newid = [id[0] + checkY, id[1] + checkX];
+                        revealNear(newid);
+                    }
+                }   
+            }
+        }
     }
 }
 
