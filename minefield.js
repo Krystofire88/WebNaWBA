@@ -200,7 +200,29 @@ function clickedBox(id) {
         currentBoard[id[0]][id[1]].isUncovered = true;
         revealNear(id)
         regenBoard(false);
+        checkWin();
     }
+}
+
+function checkWin()
+{
+    for (let y = 0; y < yMax; y++)
+    {
+        for (let x = 0; x < xMax; x++) 
+        { 
+            if(currentBoard[y][x].isBomb) continue;
+            if(!currentBoard[y][x].isUncovered) return;
+        }
+    }
+    win();
+}
+
+function win()
+{
+    setTimeout(() => {
+        window.alert("You Win");
+        location.reload();
+    }, 10);
 }
 
 function revealNear(id)
