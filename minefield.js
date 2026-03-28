@@ -17,12 +17,9 @@ class Tile
     isUncovered = false;
     isBomb;
     value;
-    x;
-    y;
-    constructor(y, x, isBomb, value)
+
+    constructor(isBomb, value)
     {
-        this.x = x;
-        this.y = y;
         this.isBomb = isBomb;
         this.value = value;
     }
@@ -75,7 +72,7 @@ function generateBombs() {
             i--;
             continue;
         }
-        bomb = new Tile(y,x,true, bombNum)
+        bomb = new Tile(true, bombNum)
         currentBoard[y][x] = bomb;
     }
 }
@@ -88,54 +85,15 @@ function fillNumbers() {
             }
             let bombsNear = 0;
             for (let i = 0; i < 8; i++) {
-                let checkX = 0;
-                let checkY = 0;
-                switch (i) {
-                    case 0:
-                        checkY = -1;
-                        checkX = -1;
-                        break;
-                    case 1:
-                        checkY = -1;
-                        checkX = 0;
-                        break;
-                    case 2:
-                        checkY = -1;
-                        checkX = +1;
-                        break;
-                    case 3:
-                        checkY = 0;
-                        checkX = +1;
-                        break;
-                    case 4:
-                        checkY = +1;
-                        checkX = +1;
-                        break;
-                    case 5:
-                        checkY = +1;
-                        checkX = 0;
-                        break;
-                    case 6:
-                        checkY = +1;
-                        checkX = -1;
-                        break;
-                    case 7:
-                        checkY = 0;
-                        checkX = -1;
-                        break;
-                    default:
-                        checkX = 0;
-                        checkY = 0;
-                        break;
-                }
-                if (currentBoard[y + checkY]?.[x + checkX] != null) // '?.' <= poradilo chatGPT  
+                let dir = directionSwitch(i);
+                if (currentBoard[y + dir[0]]?.[x + dir[1]] != null) // '?.' <= poradilo chatGPT  
                 {
-                    if (currentBoard[y + checkY][x + checkX].isBomb) {
+                    if (currentBoard[y + dir[0]][x + dir[1]].isBomb) {
                         bombsNear++;
                     }
                 }
             }
-            tile = new Tile(y,x,false,bombsNear);
+            tile = new Tile(false, bombsNear);
             currentBoard[y][x] = tile;
         }
     }
@@ -202,6 +160,63 @@ function clickedBox(id) {
         regenBoard(false);
         checkWin();
     }
+    else if (currentBoard[id[0]][id[1]].isUncovered)
+    {
+        autoUncover(id);
+        regenBoard(false);
+        checkWin(); 
+    }
+}
+
+function autoUncover(id)
+{
+    let numberOfFlags = 0;
+    for (let i = 0; i < 8; i++) {
+        let dir = directionSwitch(i);
+        if(currentBoard[id[0] + dir[0]]?.[id[1] + dir[1]] != null)
+        {
+            if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered)
+            {
+                if ((currentBoard[id[0] + dir[0]][id[1] + dir[1]].value & 0x30) == 16)
+                {
+                    numberOfFlags++;
+                }
+            }
+        }
+    }
+    if(numberOfFlags == currentBoard[id[0]][id[1]].value)
+    {
+        for (let i = 0; i < 8; i++) {
+            let dir = directionSwitch(i);
+            if(currentBoard[id[0] + dir[0]]?.[id[1] + dir[1]] != null)
+            {
+                if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered)
+                {
+                    if ((currentBoard[id[0] + dir[0]][id[1] + dir[1]].value & 0x30) != 16)
+                    {
+                        if(currentBoard[id[0] + dir[0]][id[1] + dir[1]].isBomb)
+                        {
+                            lose();
+                        }
+                        currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered = true;
+                        if (currentBoard[id[0] + dir[0]][id[1] + dir[1]].value == 0) {
+                            let newid = [id[0] + dir[0], id[1] + dir[1]];
+                            revealNear(newid);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+function lose()
+{
+    regenBoard(true);
+    setTimeout(() => { 
+        window.alert("GAME OVER");
+        location.reload();
+    }, 10);
 }
 
 function checkWin()
@@ -219,6 +234,7 @@ function checkWin()
 
 function win()
 {
+    regenBoard(true);
     setTimeout(() => {
         window.alert("You Win");
         location.reload();
@@ -230,53 +246,14 @@ function revealNear(id)
     if(currentBoard[id[0]][id[1]].value == 0)
     {
         for (let i = 0; i < 8; i++) {
-            let checkX = 0;
-            let checkY = 0;
-            switch (i) {
-                case 0:
-                    checkY = -1;
-                    checkX = -1;
-                    break;
-                case 1:
-                    checkY = -1;
-                    checkX = 0;
-                    break;
-                case 2:
-                    checkY = -1;
-                    checkX = +1;
-                    break;
-                case 3:
-                    checkY = 0;
-                    checkX = +1;
-                    break;
-                case 4:
-                    checkY = +1;
-                    checkX = +1;
-                    break;
-                case 5:
-                    checkY = +1;
-                    checkX = 0;
-                    break;
-                case 6:
-                    checkY = +1;
-                    checkX = -1;
-                    break;
-                case 7:
-                    checkY = 0;
-                    checkX = -1;
-                    break;
-                default:
-                    checkX = 0;
-                    checkY = 0;
-                    break;
-            }
-            if(currentBoard[id[0] + checkY]?.[id[1] + checkX] != null)
+            let dir = directionSwitch(i);
+            if(currentBoard[id[0] + dir[0]]?.[id[1] + dir[1]] != null)
             {
-                if (!currentBoard[id[0] + checkY][id[1] + checkX].isUncovered)
+                if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered)
                 {
-                    currentBoard[id[0] + checkY][id[1] + checkX].isUncovered = true;
-                    if (currentBoard[id[0] + checkY][id[1] + checkX].value == 0) {
-                        let newid = [id[0] + checkY, id[1] + checkX];
+                    currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered = true;
+                    if (currentBoard[id[0] + dir[0]][id[1] + dir[1]].value == 0) {
+                        let newid = [id[0] + dir[0], id[1] + dir[1]];
                         revealNear(newid);
                     }
                 }   
@@ -330,12 +307,57 @@ function makeFlag(id) {
     }
     else if ((currentBoard[id[0]][id[1]].value & 0x30) == 16) {
         currentBoard[id[0]][id[1]].value -= 0x10;
-boxDiv.innerText = " ";
+        boxDiv.innerText = " ";
         flagCount++;
     } else {
         console.warn(currentBoard[id[0]][id[1]].value)
-        console.warn((currentBoard[id[0]][id[1].value] & 0x10))
+        console.warn((currentBoard[id[0]][id[1]].value & 0x10))
     }
+}
+
+function directionSwitch(i)
+{
+    let checkY = 0;
+    let checkX = 0;
+    switch (i) {
+        case 0:
+            checkY = -1;
+            checkX = -1;
+            break;
+        case 1:
+            checkY = -1;
+            checkX = 0;
+            break;
+        case 2:
+            checkY = -1;
+            checkX = +1;
+            break;
+        case 3:
+            checkY = 0;
+            checkX = +1;
+            break;
+        case 4:
+            checkY = +1;
+            checkX = +1;
+            break;
+        case 5:
+            checkY = +1;
+            checkX = 0;
+            break;
+        case 6:
+            checkY = +1;
+            checkX = -1;
+            break;
+        case 7:
+            checkY = 0;
+            checkX = -1;
+            break;
+        default:
+            checkX = 0;
+            checkY = 0;
+            break;
+    }
+    return [checkY, checkX];
 }
 
 function generateField() {
