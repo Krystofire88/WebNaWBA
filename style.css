@@ -6,6 +6,10 @@
   font-family: Minesweeper;
   src: url(microsoft-minesweeper-sans.ttf);
 }
+@font-face {
+  font-family: Inter;
+  src: url(Inter-VariableFont_opsz\,wght.ttf);
+}
 .playBox {
     width: 40px;
     height: 40px;
@@ -16,6 +20,10 @@
     border-color: #E0E0E0;
     border-style:outset;
     box-sizing: border-box;
+}
+.text-stroked {
+  -webkit-text-stroke-color: #E4AEA2;
+  -webkit-text-stroke-width: 4px;
 }
 /* #playingField {
     width: 20%;
