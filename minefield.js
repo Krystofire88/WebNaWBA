@@ -17,7 +17,7 @@ class Tile
     isUncovered = false;
     isBomb;
     value;
-
+    isFlagged = false;
     constructor(isBomb, value)
     {
         this.isBomb = isBomb;
@@ -146,7 +146,8 @@ function clickedRevealBox(id) {
 }
 
 function clickedBox(id) {
-    if (currentBoard[id[0]][id[1]].isBomb) {
+    if(currentBoard[id[0]][id[1]].isFlagged) return;
+    else if (currentBoard[id[0]][id[1]].isBomb) {
         regenBoard(true);
         setTimeout(() => { // <== ChatGPT poradilo
             window.alert("GAME OVER");
@@ -177,7 +178,7 @@ function autoUncover(id)
         {
             if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered)
             {
-                if ((currentBoard[id[0] + dir[0]][id[1] + dir[1]].value & 0x30) == 16)
+                if (currentBoard[id[0] + dir[0]][id[1] + dir[1]].isFlagged)
                 {
                     numberOfFlags++;
                 }
@@ -192,7 +193,7 @@ function autoUncover(id)
             {
                 if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered)
                 {
-                    if ((currentBoard[id[0] + dir[0]][id[1] + dir[1]].value & 0x30) != 16)
+                    if (!currentBoard[id[0] + dir[0]][id[1] + dir[1]].isFlagged)
                     {
                         if(currentBoard[id[0] + dir[0]][id[1] + dir[1]].isBomb)
                         {
@@ -299,14 +300,13 @@ function regenBoard(explode)
 
 function makeFlag(id) {
     let boxDiv = document.getElementById(id[0] * xMax + id[1])
-    if ((currentBoard[id[0]][id[1]].value & 0x30) == 0 && flagCount > 0 && !currentBoard[id[0]][id[1]].isUncovered) {
-        currentBoard[id[0]][id[1]].value += 0x10;
+    if (!currentBoard[id[0]][id[1]].isFlagged && flagCount > 0 && !currentBoard[id[0]][id[1]].isUncovered) {
+        currentBoard[id[0]][id[1]].isFlagged = true;
         boxDiv.innerText = "F";
         flagCount--;
-        console.log(currentBoard[id[0]][id[1]].value)
     }
-    else if ((currentBoard[id[0]][id[1]].value & 0x30) == 16) {
-        currentBoard[id[0]][id[1]].value -= 0x10;
+    else if (currentBoard[id[0]][id[1]].isFlagged) {
+        currentBoard[id[0]][id[1]].isFlagged = false;
         boxDiv.innerText = " ";
         flagCount++;
     } else {
