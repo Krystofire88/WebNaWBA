@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: Geomatrix;
+  src: url(Geomatrix.ttf);
+}
+@font-face {
+  font-family: Minesweeper;
+  src: url(microsoft-minesweeper-sans.ttf);
+}
+@font-face {
+  font-family: Inter;
+  src: url(Inter-VariableFont_opsz\,wght.ttf);
+}
