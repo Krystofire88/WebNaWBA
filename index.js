@@ -2,6 +2,7 @@ let playingField = null;
 let xWidth = null;
 let yWidth = null;
 let bombs = null;
+let bgm = null;
 
 function bombPercent() {
     bombs.max = xWidth.value * yWidth.value - 1;
@@ -9,6 +10,138 @@ function bombPercent() {
         bombs.setAttribute("value", bombs.max.toString());
     }
     document.getElementById("bomb%").innerHTML = "Density: " + (bombs.value / (xWidth.value * yWidth.value) * 100).toFixed(2) + "%";
+}
+
+class CustomPicker extends HTMLElement {
+    static observedAttributes = ["color", "size", "value"];
+    static songList = ["Caramella Girls - Caramelldansen","Muhamed Brkić Hamo - Bosanska Artiljerija",""];
+    constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: "closed" });
+        this.backdrop = document.createElement("div");
+        this.pickArrow = document.createElement("div");
+        this.pickArrowIcon = document.createElement("img");
+        this.listItem = document.createElement("div");
+        this.stylepoop = document.createElement("style");
+    }
+
+    shadow = "";
+    backdrop = "";
+    pickArrow = "";
+    pickArrowIcon = "";
+    listItem = "";
+    value = 0;
+    state=1;
+    stylepoop="";
+    changed = new Event("change", { composed: true });
+
+    connectedCallback() {
+
+        this.stylepoop.textContent = `
+      .hover {
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
+}
+.hover:hover {
+  transform: scale(1.1);
+}
+  .hover:active {
+  transform:scaleY(0.8) scaleX(1);}
+  .listItem {
+  display: ${this.state ? "none" : "flex"};
+  
+  }
+    `;
+        this.shadow.appendChild(this.stylepoop);
+        this.listItem.style.backgroundColor = "#F8F2DC";
+        this.listItem.style.borderRadius = "8px";
+        this.listItem.style.color = "#7E2828";
+        this.listItem.style.fontFamily = "Inter";
+        this.listItem.style.fontSize = "32px";
+        this.listItem.style.letterSpacing = "5%";
+        // this.listItem.style.borderStyle = "solid";
+        // this.listItem.style.borderWidth = "4px";
+        // this.listItem.style.borderColor = "indianred";
+        this.listItem.style.width = "40vw";
+        this.listItem.style.height = "64px";
+        this.listItem.style.textAlign = "center";
+        // this.listItem.style.display = this.state ? "none" : "flex";
+        this.listItem.style.justifyContent = "center";
+        this.listItem.style.alignItems = "center";
+        this.listItem.style.filter = "drop-shadow(0 7px 5px rgba(0,0,0,0.5))";
+        this.listItem.classList.add("listItem");
+        this.listItem.classList.add("hover");
+
+        this.backdrop.style.backgroundColor = "#F8F2DC";
+        this.backdrop.style.borderTopLeftRadius = "8px";
+        this.backdrop.style.borderBottomLeftRadius = "8px";
+        this.backdrop.style.color = "#000000";
+        this.backdrop.style.fontFamily = "Inter";
+        this.backdrop.style.fontSize = "32px";
+        this.backdrop.innerText = "Select song...";
+        this.backdrop.style.width = "40vw";
+        this.backdrop.style.height = "64px";
+        this.backdrop.style.textAlign = "center";
+        this.backdrop.style.display = "flex";
+        this.backdrop.style.justifyContent = "center";
+        this.backdrop.style.alignItems = "center";
+        this.pickArrow.style.backgroundColor = "#7E2828";
+        this.pickArrow.style.width = "64px";
+        this.pickArrow.style.height = "64px";
+        this.pickArrow.style.position = "absolute";
+        this.pickArrow.style.marginTop = "-64px";
+        this.pickArrow.style.marginLeft = "39vw";
+        this.pickArrow.style.display = "flex";
+        this.pickArrow.style.justifyItems = "center";
+        this.pickArrow.style.alignItems = "center";
+        this.pickArrow.style.borderTopRightRadius = "8px";
+        this.pickArrow.style.borderBottomRightRadius = "8px";
+        this.pickArrow.classList.add("hover");
+        this.pickArrowIcon.setAttribute("style", `height:16px;width:20px;transform:rotate(${(180*this.state).toString()}deg);margin-left:22px`);
+        this.pickArrowIcon.setAttribute("src", "./src/arrow.png");
+        this.pickArrow.addEventListener("click", () => {
+            this.state ^= 1;
+            this.pickArrowIcon.style.transform=`rotate(${(180*this.state).toString()}deg)`;
+                
+            this.stylepoop.textContent = `
+      .hover {
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
+}
+.hover:hover {
+  transform: scale(1.1);
+}
+  .hover:active {
+  transform:scaleY(0.8) scaleX(1);}
+  .listItem {
+  display: ${this.state ? "none" : "flex"};
+  
+  }
+    `;
+        })
+        this.pickArrow.appendChild(this.pickArrowIcon);
+        this.shadow.appendChild(this.backdrop);
+        this.shadow.appendChild(this.pickArrow);
+        for (let i = 0; i < CustomPicker.songList.length; i++) {
+            const x = this.listItem.cloneNode(true);
+            x.innerText=CustomPicker.songList[i];
+            x.addEventListener("click",()=>{
+            this.backdrop.innerText=x.innerText;this.setAttribute("value",i);
+        })
+            this.shadow.appendChild(x);
+        }
+        
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name == "value") {
+            this.value = newValue;
+            this.backdrop.innerText = CustomPicker.songList[newValue];
+            this.dispatchEvent(this.changed);
+        }
+    }
 }
 
 class CustomRange extends HTMLElement {
@@ -36,6 +169,23 @@ class CustomRange extends HTMLElement {
     max = Number.MAX_SAFE_INTEGER;
 
     connectedCallback() {
+        const style = document.createElement("style");
+
+        style.textContent = `
+      .hover {
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
+}
+.hover:hover {
+  transform: scale(1.1);
+}
+  .hover:active {
+  transform:scale(0.8);
+  }
+    `;
+
+        this.shadow.appendChild(style);
         this.backdrop.style.backgroundColor = "#E4AEA2";
         this.backdrop.style.borderTopLeftRadius = "8px";
         this.backdrop.style.borderBottomLeftRadius = "8px";
@@ -68,6 +218,8 @@ class CustomRange extends HTMLElement {
         this.downArrow.style.height = "32px";
         this.upArrow.style.borderTopRightRadius = "8px";
         this.downArrow.style.borderBottomRightRadius = "8px";
+        this.upArrow.classList.add("hover");
+        this.downArrow.classList.add("hover");
         this.upArrowIcon.setAttribute("style", "height:10px;width:12px;margin-left:10px");
         this.upArrowIcon.setAttribute("src", "./src/arrow.png");
         this.downArrowIcon.setAttribute("style", "height:10px;width:12px;transform:rotate(180deg);margin-left:10px");
@@ -108,6 +260,7 @@ class CustomRange extends HTMLElement {
 }
 
 customElements.define("custom-range", CustomRange);
+customElements.define("custom-picker", CustomPicker);
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -117,28 +270,29 @@ document.addEventListener("DOMContentLoaded", () => {
             case 0:
                 startButton.style.animationName = "startClick1"; startButton.style.animationDuration = "350ms"; startButton.style.animationTimingFunction = "cubic-bezier(0, 0, 0.18, 1.82)";
                 setTimeout(() => {
-                    document.gameForm.submit();
+                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
                 }, 300);
                 break;
             case 1:
                 startButton.style.animationName = "startClick2"; startButton.style.animationDuration = "750ms"; startButton.style.animationTimingFunction = "cubic-bezier(0,0,1,0)";
                 setTimeout(() => {
-                    document.gameForm.submit();
+                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
                 }, 700);
                 break;
             case 2:
                 startButton.style.animationName = "startClick3"; startButton.style.animationDuration = "0.8s"; startButton.style.animationTimingFunction = "cubic-bezier(.75,0,0,1)";
                 setTimeout(() => {
-                    document.gameForm.submit();
+                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
                 }, 750);
                 break;
             case 3:
                 startButton.style.animationName = "startClick4"; startButton.style.animationDuration = "0.8s"; startButton.style.animationTimingFunction = "cubic-bezier(.75,0,0,1)";
                 setTimeout(() => {
-                    document.gameForm.submit();
+                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
                 }, 750);
                 break;
             default:
+                window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
                 break;
         }
 
@@ -147,6 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
     xWidth = document.getElementById("xWidth");
     yWidth = document.getElementById("yWidth");
     bombs = document.getElementById("bombs");
+    bgm = document.getElementById("bgm");
     bombPercent();
     bombs.addEventListener("change", bombPercent);
     xWidth.addEventListener("change", bombPercent);
