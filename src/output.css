@@ -8,8 +8,18 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --spacing: 0.25rem;
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-5xl: 3rem;
+    --text-5xl--line-height: 1;
     --text-7xl: 4.5rem;
     --text-7xl--line-height: 1;
+    --text-8xl: 6rem;
+    --text-8xl--line-height: 1;
     --text-9xl: 8rem;
     --text-9xl--line-height: 1;
     --font-weight-normal: 400;
@@ -249,6 +259,9 @@
   .h-\[95\.8\%\] {
     height: 95.8%;
   }
+  .w-12 {
+    width: calc(var(--spacing) * 12);
+  }
   .w-\[90\.9\%\] {
     width: 90.9%;
   }
@@ -282,6 +295,9 @@
   .flex-col {
     flex-direction: column;
   }
+  .items-center {
+    align-items: center;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -307,8 +323,20 @@
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
+  .pt-1 {
+    padding-top: calc(var(--spacing) * 1);
+  }
+  .pt-2 {
+    padding-top: calc(var(--spacing) * 2);
+  }
+  .pl-4 {
+    padding-left: calc(var(--spacing) * 4);
+  }
   .text-center {
     text-align: center;
+  }
+  .text-justify {
+    text-align: justify;
   }
   .font-\[Geomatrix\] {
     font-family: Geomatrix;
@@ -319,12 +347,33 @@
   .font-\[Minesweeper\] {
     font-family: Minesweeper;
   }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-5xl {
+    font-size: var(--text-5xl);
+    line-height: var(--tw-leading, var(--text-5xl--line-height));
+  }
   .text-7xl {
     font-size: var(--text-7xl);
     line-height: var(--tw-leading, var(--text-7xl--line-height));
   }
-  .text-\[160px\] {
-    font-size: 160px;
+  .text-8xl {
+    font-size: var(--text-8xl);
+    line-height: var(--tw-leading, var(--text-8xl--line-height));
+  }
+  .text-9xl {
+    font-size: var(--text-9xl);
+    line-height: var(--tw-leading, var(--text-9xl--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
   }
   .font-normal {
     --tw-font-weight: var(--font-weight-normal);
@@ -466,6 +515,18 @@
       line-height: var(--tw-leading, var(--text-9xl--line-height));
     }
   }
+}
+@font-face {
+  font-family: Geomatrix;
+  src: url(Geomatrix.ttf);
+}
+@font-face {
+  font-family: Minesweeper;
+  src: url(microsoft-minesweeper-sans.ttf);
+}
+@font-face {
+  font-family: Inter;
+  src: url(Inter-VariableFont_opsz\,wght.ttf);
 }
 @property --tw-border-style {
   syntax: "*";
