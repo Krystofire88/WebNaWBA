@@ -12,6 +12,8 @@ function bombPercent() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    let startButton = document.getElementById("start");
+    startButton.addEventListener("click",()=>{startButton.style.animationName="startClick";startButton.style.animationDuration="250ms";startButton.style.animationTimingFunction="cubic-bezier(0, 0, 0.18, 1.82)";})
     playingField = document.getElementById("playingField");
     xWidth = document.getElementById("xWidth");
     yWidth = document.getElementById("yWidth");
