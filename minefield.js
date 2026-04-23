@@ -10,6 +10,7 @@ let playingField = null;
 let timeDisplay = null;
 let flagsLeft = null;
 let time = 0;
+let timerInterval = null;
 
 const bombNum = 0x09;
 
@@ -48,15 +49,31 @@ document.addEventListener("DOMContentLoaded", () => {
     playingField = document.getElementById("playingField");
     timeDisplay = document.getElementById("timeDisplay");
     flagsLeft = document.getElementById("flagsLeft");
-    flagsLeft.textContent = "Flags Left" + flagCount;
-    timeDisplay.textContent = 0
-    setInterval(() => {
-        time++;
-        timeDisplay.textContent = "Time elapsed: " +time;
-    }, 1000);
+    backgroundMusic = document.getElementById("audio");
+    playPause = document.getElementById("play-pause");
+    backgroundMusic.play();
+    backgroundMusic.muted = false;
+    backgroundMusic.volume = 0.1;
+    initFlagsTime();
     generateField();
 });
 
+function initFlagsTime()
+{
+    flagCount = bCount;
+    flagsLeft.textContent = "Flags left: " + flagCount;
+
+    time = 0;
+
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+    }
+
+    timerInterval = setInterval(() => {
+        time++;
+        timeDisplay.textContent = "Time elapsed: " + time;
+    }, 1000);
+}
 
 function generateBombs() {
     if (bCount > xMax * yMax - 1) {
@@ -150,11 +167,7 @@ function clickedRevealBox(id) {
 function clickedBox(id) {
     if(currentBoard[id[0]][id[1]].isFlagged) return;
     else if (currentBoard[id[0]][id[1]].isBomb) {
-        regenBoard(true);
-        setTimeout(() => { // <== ChatGPT poradilo
-            window.alert("GAME OVER");
-            location.reload();
-        }, 10);
+        lose()
     }
     else if (currentBoard[id[0]][id[1]].isUncovered == false)
     {
@@ -218,7 +231,7 @@ function lose()
     regenBoard(true);
     setTimeout(() => { 
         window.alert("GAME OVER");
-        location.reload();
+        resetBoard();     
     }, 10);
 }
 
@@ -240,8 +253,23 @@ function win()
     regenBoard(true);
     setTimeout(() => {
         window.alert("You Win");
-        location.reload();
+        resetBoard();     
     }, 10);
+}
+
+function resetBoard()
+{
+    for (let y = 0; y < yMax; y++)
+    {
+        for (let x = 0; x < xMax; x++) 
+        { 
+            currentBoard[y][x].isUncovered = false;
+            currentBoard[y][x].isFlagged = false;
+        }
+    }
+    firstClick = true;
+    generateField();
+    initFlagsTime();
 }
 
 function revealNear(id)
@@ -306,13 +334,13 @@ function makeFlag(id) {
         currentBoard[id[0]][id[1]].isFlagged = true;
         boxDiv.innerText = "F";
         flagCount--;
-        flagsLeft.textContent = "Flags Left: " + flagCount;
+        flagsLeft.textContent = "Flags left: " + flagCount;
     }
     else if (currentBoard[id[0]][id[1]].isFlagged) {
         currentBoard[id[0]][id[1]].isFlagged = false;
         boxDiv.innerText = " ";
         flagCount++;
-        flagsLeft.textContent = "Flags Left:" + flagCount;
+        flagsLeft.textContent = "Flags left:" + flagCount;
     } else {
         console.warn(currentBoard[id[0]][id[1]].value)
         console.warn((currentBoard[id[0]][id[1]].value & 0x10))
@@ -371,4 +399,17 @@ function generateField() {
     }
     generateBoard();
     initField();
+}
+
+function togglePlay() {
+    if (backgroundMusic.paused)
+    {
+        backgroundMusic.play();
+        playPause.textContent = "Pause";
+    }
+    else 
+    {
+        backgroundMusic.pause();
+        playPause.textContent = "Play";
+    }
 }
