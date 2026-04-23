@@ -194,20 +194,95 @@
   .col-span-24 {
     grid-column: span 24 / span 24;
   }
+  .col-span-25 {
+    grid-column: span 25 / span 25;
+  }
+  .col-span-26 {
+    grid-column: span 26 / span 26;
+  }
   .col-span-full {
     grid-column: 1 / -1;
+  }
+  .col-start-2 {
+    grid-column-start: 2;
   }
   .col-start-3 {
     grid-column-start: 3;
   }
+  .col-start-4 {
+    grid-column-start: 4;
+  }
+  .col-start-5 {
+    grid-column-start: 5;
+  }
+  .col-start-8 {
+    grid-column-start: 8;
+  }
+  .col-start-20 {
+    grid-column-start: 20;
+  }
+  .col-start-23 {
+    grid-column-start: 23;
+  }
+  .col-start-24 {
+    grid-column-start: 24;
+  }
+  .col-start-25 {
+    grid-column-start: 25;
+  }
+  .row-span-1 {
+    grid-row: span 1 / span 1;
+  }
+  .row-span-10 {
+    grid-row: span 10 / span 10;
+  }
+  .row-span-11 {
+    grid-row: span 11 / span 11;
+  }
+  .row-span-12 {
+    grid-row: span 12 / span 12;
+  }
+  .row-span-13 {
+    grid-row: span 13 / span 13;
+  }
+  .row-span-14 {
+    grid-row: span 14 / span 14;
+  }
+  .row-span-15 {
+    grid-row: span 15 / span 15;
+  }
+  .row-span-16 {
+    grid-row: span 16 / span 16;
+  }
   .row-span-17 {
     grid-row: span 17 / span 17;
+  }
+  .row-span-18 {
+    grid-row: span 18 / span 18;
   }
   .row-start-2 {
     grid-row-start: 2;
   }
   .row-start-4 {
     grid-row-start: 4;
+  }
+  .row-start-5 {
+    grid-row-start: 5;
+  }
+  .row-start-6 {
+    grid-row-start: 6;
+  }
+  .row-start-7 {
+    grid-row-start: 7;
+  }
+  .row-start-8 {
+    grid-row-start: 8;
+  }
+  .row-start-9 {
+    grid-row-start: 9;
+  }
+  .row-start-10 {
+    grid-row-start: 10;
   }
   .my-\[2vh\] {
     margin-block: 2vh;
@@ -311,6 +386,9 @@
   .grid-cols-28 {
     grid-template-columns: repeat(28, minmax(0, 1fr));
   }
+  .grid-rows-3 {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
   .grid-rows-\[repeat\(24\,minmax\(0\,5\.05vh\)\)\] {
     grid-template-rows: repeat(24,minmax(0,5.05vh));
   }
@@ -333,8 +411,14 @@
   .bg-\[\#7E2828\] {
     background-color: #7E2828;
   }
+  .bg-\[\#C0C0C0\] {
+    background-color: #C0C0C0;
+  }
   .bg-\[\#E4AEA2\] {
     background-color: #E4AEA2;
+  }
+  .bg-\[\#F8F2DC\] {
+    background-color: #F8F2DC;
   }
   .bg-\[\#e4aea2\] {
     background-color: #e4aea2;
