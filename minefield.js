@@ -9,6 +9,7 @@ let firstClick = true;
 let playingField = null;
 let timeDisplay = null;
 let flagsLeft = null;
+let time = 0;
 
 const bombNum = 0x09;
 
@@ -50,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     flagsLeft.textContent = "Flags Left" + flagCount;
     timeDisplay.textContent = 0
     setInterval(() => {
-        timeDisplay.textContent = Number(timeDisplay.textContent) + 1;
+        time++;
+        timeDisplay.textContent = "Time elapsed: " +time;
     }, 1000);
     generateField();
 });
