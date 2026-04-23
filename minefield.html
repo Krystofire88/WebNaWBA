@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/src/output.css">
+    <link rel="stylesheet" href="./src/output.css">
     <script src="minefield.js"></script>
     <title>Minesweeper</title>
 </head>
-<body>
-    <h3 id="timeDisplay">timeDisplay</h3>
-    <h3 id="flagsLeft">flagsLeft</h3>
-    <div id="playingField"></div>
+<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,5.05vh))] md:grid-rows-[repeat(24,minmax(0,6.348vh))] overflow-hidden">
+         <h1
+        class="font-[Minesweeper] ml-[0.2%] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center mt-[-3.3vh] md:mt-[0.45vh] md:text-9xl">
+        Minesweeper</h1>
+        <div class="col-start-2 text-xl col-span-3 row-start-5 row-span-1 rounded-sm bg-[#F8F2DC] text-center">
+            <h3 id="timeDisplay">timeDisplay</h3>
+        </div>
+        <div class="col-start-24  col-span-3 row-start-5 row-span-1 rounded-sm bg-[#F8F2DC] text-center">
+        <h3 id="flagsLeft">flagsLeft</h3>
+        </div>
+        <div class="bg-[#7E2828] col-start-2 col-span-25 row-start-6 row-span-12 rounded-sm">
+        </div>
+        <div class="bg-[#E4AEA2] col-start-3 col-span-23 row-start-7 row-span-10 rounded-sm">
+            <div class="self-center" id="playingField"></div>
+        </div>
 </body>
 </html>
