@@ -20,17 +20,30 @@
             <div class="drop-shadow-lg/75 text-center pt-2 bg-[#f8f2dc] ml-[4.5%] mr-[1.33%] h-[11.7vh] md:h-[24.85vh] mt-[0.25vh] md:mt-[-0.1vh] mb-[0.7vh] md:mb-[2vh] w-[91%] md:w-[16.55%] rounded-2xl md:rounded-xl">TIME</div>
 
             <div class="drop-shadow-lg/75 ml-[4.5%] md:ml-auto flex-1 flex-col">
-                <div class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[11.7vh] mt-[-0.1vh] mb-[0.8vh] md:mb-[1.4vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
-                    <label for="bombs" class="md:ml-[1%]">Mines: </label>
+                <div class="bg-[#f8f2dc] flex items-center md:mr-[4.5%] h-[11.7vh] mt-[-0.1vh] mb-[0.8vh] md:mb-[1.4vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
+                    <div class="w-1/2 flex items-center  pl-4">
+                    <label for="bombs" class="md:ml-[1%]">Mines:⠀</label> <!--invisible znak přidaný pro aesthetiku, mezerník nefunguje-->
                     <input type="number" name="bombs" id="bombs" min="0" value="25">
-                    <output id="bomb%"></output>
+                    </div>
+                    <div class="w-1/2 flex items-center">
+                        <div class="w-1/2 flex items-center  pl-4">
+                            <p>Bomb density:⠀</p>
+                        </div>
+                        <div class="w-1/2 flex items-center pl-4">
+                            <output id="bomb%"></output>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[25vh] md:h-[11.71vh] mb-[0.7vh] md:mb-[2.75vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
-                    <label for="yWidth" class="md:ml-[1%]">Rows: </label>
-                    <input class= "w-12" type="number" name="yWidth" id="yWidth" min="1" value="10">
-                    <label for="xWidth">Columns: </label>
-                    <input class= "w-12" type="number" name="xWidth" id="xWidth" min="1" value="10">
+                <div class="bg-[#f8f2dc] flex items-center md:mr-[4.5%] h-[25vh] md:h-[11.71vh] mb-[0.7vh] md:mb-[2.75vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
+                    <div class="w-1/2 flex items-center  pl-4">
+                    <label for="yWidth" class="md:ml-[1%]">Rows:⠀</label> 
+                    <input class= "w-20" type="number" name="yWidth" id="yWidth" min="1" value="10">
+                    </div>
+                    <div class="w-1/2 flex items-center  pl-4">
+                    <label for="xWidth">Columns:⠀</label>
+                    <input class= "w-20" type="number" name="xWidth" id="xWidth" min="1" value="10">
+                    </div>
                     
                 </div>
             </div></div>
