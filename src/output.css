@@ -8,11 +8,18 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --spacing: 0.25rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --text-7xl: 4.5rem;
     --text-7xl--line-height: 1;
     --text-9xl: 8rem;
     --text-9xl--line-height: 1;
     --font-weight-normal: 400;
+    --radius-sm: 0.25rem;
     --radius-2xl: 1rem;
     --drop-shadow-lg: 0 4px 4px rgb(0 0 0 / 0.15);
     --default-font-family: var(--font-sans);
@@ -168,23 +175,128 @@
   }
 }
 @layer utilities {
+  .col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+  .col-span-14 {
+    grid-column: span 14 / span 14;
+  }
+  .col-span-15 {
+    grid-column: span 15 / span 15;
+  }
+  .col-span-16 {
+    grid-column: span 16 / span 16;
+  }
+  .col-span-17 {
+    grid-column: span 17 / span 17;
+  }
+  .col-span-18 {
+    grid-column: span 18 / span 18;
+  }
+  .col-span-20 {
+    grid-column: span 20 / span 20;
+  }
+  .col-span-21 {
+    grid-column: span 21 / span 21;
+  }
+  .col-span-22 {
+    grid-column: span 22 / span 22;
+  }
+  .col-span-23 {
+    grid-column: span 23 / span 23;
+  }
   .col-span-24 {
     grid-column: span 24 / span 24;
+  }
+  .col-span-25 {
+    grid-column: span 25 / span 25;
+  }
+  .col-span-26 {
+    grid-column: span 26 / span 26;
   }
   .col-span-full {
     grid-column: 1 / -1;
   }
+  .col-start-2 {
+    grid-column-start: 2;
+  }
   .col-start-3 {
     grid-column-start: 3;
   }
+  .col-start-4 {
+    grid-column-start: 4;
+  }
+  .col-start-5 {
+    grid-column-start: 5;
+  }
+  .col-start-8 {
+    grid-column-start: 8;
+  }
+  .col-start-20 {
+    grid-column-start: 20;
+  }
+  .col-start-23 {
+    grid-column-start: 23;
+  }
+  .col-start-24 {
+    grid-column-start: 24;
+  }
+  .col-start-25 {
+    grid-column-start: 25;
+  }
+  .row-span-1 {
+    grid-row: span 1 / span 1;
+  }
+  .row-span-10 {
+    grid-row: span 10 / span 10;
+  }
+  .row-span-11 {
+    grid-row: span 11 / span 11;
+  }
+  .row-span-12 {
+    grid-row: span 12 / span 12;
+  }
+  .row-span-13 {
+    grid-row: span 13 / span 13;
+  }
+  .row-span-14 {
+    grid-row: span 14 / span 14;
+  }
+  .row-span-15 {
+    grid-row: span 15 / span 15;
+  }
+  .row-span-16 {
+    grid-row: span 16 / span 16;
+  }
   .row-span-17 {
     grid-row: span 17 / span 17;
+  }
+  .row-span-18 {
+    grid-row: span 18 / span 18;
   }
   .row-start-2 {
     grid-row-start: 2;
   }
   .row-start-4 {
     grid-row-start: 4;
+  }
+  .row-start-5 {
+    grid-row-start: 5;
+  }
+  .row-start-6 {
+    grid-row-start: 6;
+  }
+  .row-start-7 {
+    grid-row-start: 7;
+  }
+  .row-start-8 {
+    grid-row-start: 8;
+  }
+  .row-start-9 {
+    grid-row-start: 9;
+  }
+  .row-start-10 {
+    grid-row-start: 10;
   }
   .my-\[2vh\] {
     margin-block: 2vh;
@@ -273,8 +385,14 @@
   .resize {
     resize: both;
   }
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .grid-cols-28 {
     grid-template-columns: repeat(28, minmax(0, 1fr));
+  }
+  .grid-rows-3 {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
   }
   .grid-rows-\[repeat\(24\,minmax\(0\,5\.05vh\)\)\] {
     grid-template-rows: repeat(24,minmax(0,5.05vh));
@@ -282,11 +400,29 @@
   .flex-col {
     flex-direction: column;
   }
+  .items-center {
+    align-items: center;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .place-self-center {
+    place-self: center;
+  }
+  .self-center {
+    align-self: center;
+  }
+  .justify-self-center {
+    justify-self: center;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
+  }
+  .rounded-sm {
+    border-radius: var(--radius-sm);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -295,8 +431,14 @@
   .bg-\[\#7E2828\] {
     background-color: #7E2828;
   }
+  .bg-\[\#C0C0C0\] {
+    background-color: #C0C0C0;
+  }
   .bg-\[\#E4AEA2\] {
     background-color: #E4AEA2;
+  }
+  .bg-\[\#F8F2DC\] {
+    background-color: #F8F2DC;
   }
   .bg-\[\#e4aea2\] {
     background-color: #e4aea2;
@@ -310,6 +452,9 @@
   .text-center {
     text-align: center;
   }
+  .text-justify {
+    text-align: justify;
+  }
   .font-\[Geomatrix\] {
     font-family: Geomatrix;
   }
@@ -322,6 +467,18 @@
   .text-7xl {
     font-size: var(--text-7xl);
     line-height: var(--tw-leading, var(--text-7xl--line-height));
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
   }
   .text-\[160px\] {
     font-size: 160px;
@@ -466,6 +623,18 @@
       line-height: var(--tw-leading, var(--text-9xl--line-height));
     }
   }
+}
+@font-face {
+  font-family: Geomatrix;
+  src: url(Geomatrix.ttf);
+}
+@font-face {
+  font-family: Minesweeper;
+  src: url(microsoft-minesweeper-sans.ttf);
+}
+@font-face {
+  font-family: Inter;
+  src: url(Inter-VariableFont_opsz\,wght.ttf);
 }
 @property --tw-border-style {
   syntax: "*";
