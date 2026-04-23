@@ -12,7 +12,12 @@
   font-family: Inter;
   src: url(Inter-VariableFont_opsz\,wght.ttf);
 }
-#start:hover {
+.hover {
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
+}
+.hover:hover {
   transform: scale(1.03);
 }
 @keyframes startClick1 {
@@ -27,9 +32,4 @@
 }
 @keyframes startClick4 {
   100%{background-color: rgba(0, 0, 0, 0);color: rgba(0, 0, 0,0);}
-}
-#start {
-  transition-property: all;
-  transition-duration: 200ms;
-  transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
 }
