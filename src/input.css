@@ -15,8 +15,14 @@
 #start:hover {
   transform: scale(1.03);
 }
-@keyframes startClick {
+@keyframes startClick1 {
   100% {transform:rotate(20deg) scale(0.4);}
+}
+@keyframes startClick2 {
+  100%{transform:translateY(-100vh)}
+}
+@keyframes startClick3 {
+  100%{transform:scale(20)}
 }
 #start {
   transition-property: all;
