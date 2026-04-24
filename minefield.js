@@ -1,6 +1,7 @@
 let currentBoard = null;
 let xMax = null;
 let yMax = null;
+let bgm = null;
 let bCount = null;
 let flagCount = null;
 let boxClicked = [0, 0];
@@ -42,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 bCount = pair[1];
                 flagCount = bCount;
                 break;
+            case "bgm":
+                bgm = pair[1];
             default:
                 break;
         }
@@ -51,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     flagsLeft = document.getElementById("flagsLeft");
     backgroundMusic = document.getElementById("audio");
     playPause = document.getElementById("play-pause");
+    backgroundMusic.setAttribute("src",`src/music/${bgm}.mp3`);
     backgroundMusic.play();
     backgroundMusic.muted = false;
     backgroundMusic.volume = 0.1;

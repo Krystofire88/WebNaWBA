@@ -9,37 +9,51 @@
     <title>Document</title>
 </head>
 
-<body class="font-[Geomatrix] text-5xl tracking-[8%] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,5.05vh))] md:grid-rows-[repeat(24,minmax(0,6.348vh))] overflow-hidden">
+<body
+    class="font-[Geomatrix] text-5xl tracking-[8%] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,5.05vh))] md:grid-rows-[repeat(24,minmax(0,6.348vh))] overflow-hidden">
     <h1
         class="drop-shadow-[0_3.5px_1.2px_rgba(70,60,0,0.55)] font-[Minesweeper] ml-[0.2%] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center mt-[-3.3vh] md:mt-[-0.45vh] md:text-8xl">
         Minesweeper</h1>
-    <div class="bg-[#7E2828] rounded-2xl md:rounded-xl row-start-4 row-span-17 md:row-start-5 md:row-span-11 col-span-24 col-start-3 md:col-span-16 md:col-start-7 flex-1 h-[95.8%] ml-[0.4%] w-[99.25%] mt-[-1vh]">
-            <div class="flex mt-[2vh] flex-col md:flex-row md:mt-[5vh]">
+    <div
+        class="bg-[#7E2828] rounded-2xl md:rounded-xl row-start-4 row-span-17 md:row-start-5 md:row-span-11 col-span-24 col-start-3 md:col-span-16 md:col-start-7 flex-1 h-[95.8%] ml-[0.4%] w-[99.25%] mt-[-1vh]">
+        <div class="flex mt-[2vh] flex-col md:flex-row md:mt-[5vh]">
 
-            <div class="drop-shadow-lg/75 text-center pt-2 bg-[#f8f2dc] ml-[4.5%] mr-[1.33%] h-[11.7vh] md:h-[24.85vh] mt-[0.25vh] md:mt-[-0.1vh] mb-[0.7vh] md:mb-[2vh] w-[91%] md:w-[16.55%] rounded-2xl md:rounded-xl">TIME</div>
+            <div
+                class="drop-shadow-lg/75 text-center pt-2 bg-[#f8f2dc] ml-[4.5%] mr-[1.33%] h-[11.7vh] md:h-[24.85vh] mt-[0.25vh] md:mt-[-0.1vh] mb-[0.7vh] md:mb-[2vh] w-[91%] md:w-[16.55%] rounded-2xl md:rounded-xl">
+                TIME</div>
 
             <div class="drop-shadow-lg/75 ml-[4.5%] md:ml-auto flex-1 flex-col">
-                <div class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[11.7vh] mt-[-0.1vh] mb-[0.8vh] md:mb-[1.4vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
+                <div
+                    class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[11.7vh] mt-[-0.1vh] mb-[0.8vh] md:mb-[1.4vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
                     <label for="bombs" class="md:ml-[1%]">Mines: </label>
                     <!-- <input type="number" name="bombs" id="bombs" min="0" value="25"> -->
-                     <custom-range id="bombs" min="0" value="20" name="bombs" class="ml-[3%] mr-[10%]"></custom-range>
+                    <custom-range min="0" value="20" id="bombs" class="ml-[3%] mr-[10%]"></custom-range>
                     <output id="bomb%"></output>
                 </div>
 
-                <div class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[25vh] md:h-[11.71vh] mb-[0.7vh] md:mb-[2.75vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
+                <div
+                    class="bg-[#f8f2dc] pl-4 flex items-center md:mr-[4.5%] h-[25vh] md:h-[11.71vh] mb-[0.7vh] md:mb-[2.75vh] w-[95.1%] md:w-[94.07%] rounded-2xl md:rounded-xl">
                     <label for="yWidth" class="md:ml-[1%]">Rows: </label>
                     <!-- <input class= "w-12" type="number" name="yWidth" id="yWidth" min="1" value="10"> -->
-                    <custom-range id="yWidth" min="1" value="10" name="yWidth" class="ml-[4.2%] mr-[10%]"></custom-range>
+                    <custom-range min="1" value="10" id="yWidth"
+                        class="ml-[4.2%] mr-[10%]"></custom-range>
                     <label for="xWidth">Columns: </label>
                     <!-- <input class= "w-12" type="number" name="xWidth" id="xWidth" min="1" value="10"> -->
-                    <custom-range id="xWidth" min="1" value="10" name="xWidth" class="ml-[3.4%]"></custom-range>
+                    <custom-range min="1" value="10" id="xWidth" class="ml-[3.4%]"></custom-range>
                 </div>
-            </div></div>
+            </div>
+        </div>
 
-            <div class="drop-shadow-lg/75 flex items-center pl-4 bg-[#e4aea2] ml-[4.5%] h-[10.1vh] mb-[-1vh] md:mb-[0.75vh] rounded-2xl md:rounded-xl w-[90.9%]"><p class="ml-[1%] text-[#7E2828]">BGM</p><custom-picker name="bgm" id="bgm" class="ml-[5.4%] w-[90%]"></custom-picker></div>
+        <div
+            class="drop-shadow-lg/75 flex items-center pl-4 bg-[#e4aea2] ml-[4.5%] h-[10.1vh] mb-[-1vh] md:mb-[0.75vh] rounded-2xl md:rounded-xl w-[90.9%]">
+            <p class="ml-[1%] text-[#7E2828]">BGM</p>
+            <!-- <img src="src/note.png" class="ml-[-0.5%]"> -->
+            <custom-picker id="bgm" class="ml-[2vw]"></custom-picker>
+        </div>
 
-            <button type="button" id="start" class="hover font-normal text-stroked font-[Inter] z-[-1] text-9xl tracking-[8%] drop-shadow-lg/75 bg-[#f8f2dc] text-center text-[#7E2828] ml-[4.5%] h-[16.62vh] my-[2vh] w-[90.95%] rounded-2xl">Start</button>
+        <button type="button" id="start"
+            class="hover font-normal text-stroked font-[Inter] z-[-1] text-9xl tracking-[8%] drop-shadow-lg/75 bg-[#f8f2dc] text-center text-[#7E2828] ml-[4.5%] h-[16.62vh] my-[2vh] w-[90.95%] rounded-2xl">Start</button>
     </div>
 </body>
 
-</html>	
+</html>
