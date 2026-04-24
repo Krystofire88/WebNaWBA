@@ -1,8 +1,8 @@
-let playingField = null;
 let xWidth = null;
 let yWidth = null;
 let bombs = null;
 let bgm = null;
+let startButton = null;
 
 function bombPercent() {
     bombs.max = xWidth.value * yWidth.value - 1;
@@ -14,7 +14,7 @@ function bombPercent() {
 
 class CustomPicker extends HTMLElement {
     static observedAttributes = ["color", "size", "value"];
-    static songList = ["Caramella Girls - Caramelldansen","Muhamed Brkić Hamo - Bosanska Artiljerija",""];
+    static songList = ["Caramella Girls - Caramelldansen", "Muhamed Brkić Hamo - Bosanska Artiljerija", ""];
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: "closed" });
@@ -31,8 +31,8 @@ class CustomPicker extends HTMLElement {
     pickArrowIcon = "";
     listItem = "";
     value = 0;
-    state=1;
-    stylepoop="";
+    state = 1;
+    stylepoop = "";
     changed = new Event("change", { composed: true });
 
     connectedCallback() {
@@ -60,9 +60,6 @@ class CustomPicker extends HTMLElement {
         this.listItem.style.fontFamily = "Inter";
         this.listItem.style.fontSize = "32px";
         this.listItem.style.letterSpacing = "5%";
-        // this.listItem.style.borderStyle = "solid";
-        // this.listItem.style.borderWidth = "4px";
-        // this.listItem.style.borderColor = "indianred";
         this.listItem.style.width = "40vw";
         this.listItem.style.height = "64px";
         this.listItem.style.textAlign = "center";
@@ -98,12 +95,34 @@ class CustomPicker extends HTMLElement {
         this.pickArrow.style.borderTopRightRadius = "8px";
         this.pickArrow.style.borderBottomRightRadius = "8px";
         this.pickArrow.classList.add("hover");
-        this.pickArrowIcon.setAttribute("style", `height:16px;width:20px;transform:rotate(${(180*this.state).toString()}deg);margin-left:22px`);
+        this.pickArrowIcon.setAttribute("style", `height:16px;width:20px;transform:rotate(${(180 * this.state).toString()}deg);margin-left:22px`);
         this.pickArrowIcon.setAttribute("src", "./src/arrow.png");
-        this.pickArrow.addEventListener("click", () => {
+//         document.body.addEventListener("mousedown", ()=>{
+//             if (this.state == 0) {
+//                 this.state = 1;
+//                 this.pickArrowIcon.style.transform = `rotate(${(180 * this.state).toString()}deg)`;
+//                 this.stylepoop.textContent = `
+//       .hover {
+//   transition-property: all;
+//   transition-duration: 200ms;
+//   transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
+// }
+// .hover:hover {
+//   transform: scale(1.1);
+// }
+//   .hover:active {
+//   transform:scaleY(0.8) scaleX(1);}
+//   .listItem {
+//   display: ${this.state ? "none" : "flex"};
+  
+//   }
+//     `;
+//             }
+//         }) 
+        this.pickArrow.addEventListener("mousedown", () => {
             this.state ^= 1;
-            this.pickArrowIcon.style.transform=`rotate(${(180*this.state).toString()}deg)`;
-                
+            this.pickArrowIcon.style.transform = `rotate(${(180 * this.state).toString()}deg)`;
+
             this.stylepoop.textContent = `
       .hover {
   transition-property: all;
@@ -126,13 +145,13 @@ class CustomPicker extends HTMLElement {
         this.shadow.appendChild(this.pickArrow);
         for (let i = 0; i < CustomPicker.songList.length; i++) {
             const x = this.listItem.cloneNode(true);
-            x.innerText=CustomPicker.songList[i];
-            x.addEventListener("click",()=>{
-            this.backdrop.innerText=x.innerText;this.setAttribute("value",i);
-        })
+            x.innerText = CustomPicker.songList[i];
+            x.addEventListener("mousedown", () => {
+                this.backdrop.innerText = x.innerText; this.setAttribute("value", i);
+            })
             this.shadow.appendChild(x);
         }
-        
+
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -150,7 +169,7 @@ class CustomRange extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: "closed" });
-        this.backdrop = document.createElement("div");
+        this.backdrop = document.createElement("input");
         this.upArrow = document.createElement("div");
         this.downArrow = document.createElement("div");
         this.upArrowIcon = document.createElement("img");
@@ -184,7 +203,6 @@ class CustomRange extends HTMLElement {
   transform:scale(0.8);
   }
     `;
-
         this.shadow.appendChild(style);
         this.backdrop.style.backgroundColor = "#E4AEA2";
         this.backdrop.style.borderTopLeftRadius = "8px";
@@ -192,13 +210,16 @@ class CustomRange extends HTMLElement {
         this.backdrop.style.color = "#000000";
         this.backdrop.style.fontFamily = "Inter";
         this.backdrop.style.fontSize = "48px";
-        this.backdrop.innerText = this.value.toString();
         this.backdrop.style.width = "120px";
         this.backdrop.style.height = "64px";
+        this.backdrop.style.boxSizing="border-box"
         this.backdrop.style.textAlign = "center";
         this.backdrop.style.display = "flex";
         this.backdrop.style.justifyContent = "center";
         this.backdrop.style.alignItems = "center";
+        this.backdrop.value = this.value.toString();
+        this.backdrop.setAttribute("pattern","[0-9]*")
+        this.backdrop.style.border = "none";
         this.upArrow.style.backgroundColor = "#7E2828";
         this.downArrow.style.backgroundColor = "#7E2828"
         this.upArrow.style.width = "32px";
@@ -224,17 +245,20 @@ class CustomRange extends HTMLElement {
         this.upArrowIcon.setAttribute("src", "./src/arrow.png");
         this.downArrowIcon.setAttribute("style", "height:10px;width:12px;transform:rotate(180deg);margin-left:10px");
         this.downArrowIcon.setAttribute("src", "./src/arrow.png");
-        this.upArrow.addEventListener("click", () => {
+        this.upArrow.addEventListener("mousedown", () => {
             if (Number(this.value) + 1 <= this.max) {
                 this.value++;
                 this.setAttribute("value", this.value);
             }
         })
-        this.downArrow.addEventListener("click", () => {
+        this.downArrow.addEventListener("mousedown", () => {
             if (Number(this.value) + 1 >= this.min) {
                 this.value--;
                 this.setAttribute("value", this.value);
             }
+        })
+        this.backdrop.addEventListener("input", () => {
+            this.setAttribute("value",this.backdrop.value)
         })
         this.upArrow.appendChild(this.upArrowIcon);
         this.downArrow.appendChild(this.downArrowIcon);
@@ -246,7 +270,7 @@ class CustomRange extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (name == "value" && newValue <= this.max && newValue >= this.min) {
             this.value = newValue;
-            this.backdrop.innerText = newValue.toString();
+            this.backdrop.value = newValue.toString();
             this.dispatchEvent(this.changed);
         }
         else if (name == "min") {
@@ -259,45 +283,38 @@ class CustomRange extends HTMLElement {
     }
 }
 
+function animRedir(index, duration, timing) {
+    startButton.style.animationName = `startClick${index.toString()}`; startButton.style.animationDuration = `${duration.toString()}ms`; startButton.style.animationTimingFunction = timing;
+    setTimeout(() => {
+        window.location.href = `/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
+    }, duration-50);
+}
+
 customElements.define("custom-range", CustomRange);
 customElements.define("custom-picker", CustomPicker);
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    let startButton = document.getElementById("start");
-    startButton.addEventListener("click", () => {
-        switch (Math.floor(Math.random() * 4)) {
+    startButton = document.getElementById("start");
+    startButton.addEventListener("mousedown", () => {
+        let x = Math.floor(Math.random() * 4);
+        switch (x) {
             case 0:
-                startButton.style.animationName = "startClick1"; startButton.style.animationDuration = "350ms"; startButton.style.animationTimingFunction = "cubic-bezier(0, 0, 0.18, 1.82)";
-                setTimeout(() => {
-                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
-                }, 300);
+                animRedir(x,350,"cubic-bezier(0, 0, 0.18, 1.82)");
                 break;
             case 1:
-                startButton.style.animationName = "startClick2"; startButton.style.animationDuration = "750ms"; startButton.style.animationTimingFunction = "cubic-bezier(0,0,1,0)";
-                setTimeout(() => {
-                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
-                }, 700);
+                animRedir(x,750,"cubic-bezier(0,0,1,0)");
                 break;
             case 2:
-                startButton.style.animationName = "startClick3"; startButton.style.animationDuration = "0.8s"; startButton.style.animationTimingFunction = "cubic-bezier(.75,0,0,1)";
-                setTimeout(() => {
-                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
-                }, 750);
+                animRedir(x,800,"cubic-bezier(.75,0,0,1)");
                 break;
             case 3:
-                startButton.style.animationName = "startClick4"; startButton.style.animationDuration = "0.8s"; startButton.style.animationTimingFunction = "cubic-bezier(.75,0,0,1)";
-                setTimeout(() => {
-                    window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
-                }, 750);
+                animRedir(x,800,"cubic-bezier(.75,0,0,1)");
                 break;
             default:
-                window.location.href=`/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
+                animRedir(0,0,"unset");
                 break;
         }
-
     });
-    playingField = document.getElementById("playingField");
     xWidth = document.getElementById("xWidth");
     yWidth = document.getElementById("yWidth");
     bombs = document.getElementById("bombs");
