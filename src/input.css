@@ -19,10 +19,14 @@
   100% {transform:rotate(20deg) scale(0.4);}
 }
 @keyframes startClick2 {
-  100%{transform:translateY(-100vh)}
+  100%{transform:translateY(-120vh)}
 }
 @keyframes startClick3 {
+  50%{transform:scale(0.5)}
   100%{transform:scale(20)}
+}
+@keyframes startClick4 {
+  100%{background-color: rgba(0, 0, 0, 0);color: rgba(0, 0, 0,0);}
 }
 #start {
   transition-property: all;
