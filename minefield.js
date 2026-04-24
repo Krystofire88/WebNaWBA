@@ -326,7 +326,7 @@ function regenBoard(explode)
             }
             if(currentBoard[y][x].isUncovered)
             {
-                playingField.children[y * xMax + x].innerText = txt;
+                playingField.children[y * xMax + x].innerHTML = tileImages[txt];
             }
         }
     }
@@ -336,7 +336,7 @@ function makeFlag(id) {
     let boxDiv = document.getElementById(id[0] * xMax + id[1])
     if (!currentBoard[id[0]][id[1]].isFlagged && flagCount > 0 && !currentBoard[id[0]][id[1]].isUncovered) {
         currentBoard[id[0]][id[1]].isFlagged = true;
-        boxDiv.innerText = "F";
+        boxDiv.innerHTML = tileImages["F"];
         flagCount--;
         flagsLeft.textContent = "Flags left: " + flagCount;
     }
@@ -417,4 +417,17 @@ function togglePlay() {
         playPause.textContent = "Play";
     }
 }
-//why cant i commit woihtou t adding anything istg
+
+const tileImages = {
+    "B": '<img src="assets/bomb.png">',
+    "F": '<img src="assets/flag.png">',
+    0:   '<img src="assets/zero.png">',
+    1:   '<img src="assets/one.png">',
+    2:   '<img src="assets/two.png">',
+    3:   '<img src="assets/three.png">',
+    4:   '<img src="assets/four.png">',
+    5:   '<img src="assets/five.png">',
+    6:   '<img src="assets/six.png">',
+    7:   '<img src="assets/seven.png">',
+    8:   '<img src="assets/eight.png">',
+};
