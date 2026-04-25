@@ -164,7 +164,14 @@ function initField() {
 function clickedRevealBox(id) {
     firstClick = false;
     boxClicked = id;
-    generateField();
+    while(true)
+    {
+        generateField();
+        if(currentBoard[id[0]][id[1]].value == 0)
+        {
+            break;
+        }
+    }
     currentBoard[id[0]][id[1]].isUncovered = true;
     revealNear(id);
     regenBoard(false);
@@ -235,10 +242,11 @@ function autoUncover(id)
 function lose()
 {
     regenBoard(true);
+    document.getElementById("title").style.color = "red";
     setTimeout(() => { 
         window.alert("GAME OVER");
         resetBoard();     
-    }, 10);
+    }, 100);
 }
 
 function checkWin()
@@ -258,13 +266,21 @@ function win()
 {
     regenBoard(true);
     setTimeout(() => {
+        console.log("Runs after 2 seconds");
+    }, 2000);
+    document.getElementById("title").style.color = "green";
+    setTimeout(() => {
+        console.log("Runs after 2 seconds");
+    }, 2000);
+    setTimeout(() => {
         window.alert("You Win");
         resetBoard();     
-    }, 10);
+    }, 100);
 }
 
 function resetBoard()
 {
+    document.getElementById("title").style.color = "white";
     for (let y = 0; y < yMax; y++)
     {
         for (let x = 0; x < xMax; x++) 
@@ -308,12 +324,9 @@ function regenBoard(explode)
             for (let x = 0; x < xMax; x++)
             {
                 if (currentBoard[y][x].isBomb)
-                {
+                {           
                     currentBoard[y][x].isUncovered = true;
-                    if(currentBoard[y][x].value == 25)
-                    {
-                        currentBoard[y][x].value = bombNum;
-                    }
+                    currentBoard[y][x].isFlagged = false;
                 }
             }
         }
@@ -323,7 +336,7 @@ function regenBoard(explode)
         for (let x = 0; x < xMax; x++)
         {
             let txt = currentBoard[y][x].value;
-            if (txt == bombNum) {
+            if (currentBoard[y][x].isBomb) {
                 txt = "B";
             }
             if(currentBoard[y][x].isUncovered)
@@ -425,6 +438,7 @@ const tileImages = {
     "B": '<img src="assets/bomb.png">',
     "F": '<img src="assets/flag.png">',
     0:   '<img src="assets/zero.png">',
+    1:   '<img src="assets/one.png">',
     1:   '<img src="assets/one.png">',
     2:   '<img src="assets/two.png">',
     3:   '<img src="assets/three.png">',
