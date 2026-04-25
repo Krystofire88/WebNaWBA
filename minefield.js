@@ -240,10 +240,11 @@ function autoUncover(id)
 function lose()
 {
     regenBoard(true);
+    document.getElementById("title").style.color = "red";
     setTimeout(() => { 
         window.alert("GAME OVER");
         resetBoard();     
-    }, 10);
+    }, 100);
 }
 
 function checkWin()
@@ -263,13 +264,21 @@ function win()
 {
     regenBoard(true);
     setTimeout(() => {
+        console.log("Runs after 2 seconds");
+    }, 2000);
+    document.getElementById("title").style.color = "green";
+    setTimeout(() => {
+        console.log("Runs after 2 seconds");
+    }, 2000);
+    setTimeout(() => {
         window.alert("You Win");
         resetBoard();     
-    }, 10);
+    }, 100);
 }
 
 function resetBoard()
 {
+    document.getElementById("title").style.color = "white";
     for (let y = 0; y < yMax; y++)
     {
         for (let x = 0; x < xMax; x++) 
@@ -313,10 +322,9 @@ function regenBoard(explode)
             for (let x = 0; x < xMax; x++)
             {
                 if (currentBoard[y][x].isBomb)
-                {
+                {           
                     currentBoard[y][x].isUncovered = true;
-                    console.log(currentBoard[y][x].value);                 
-                    currentBoard[y][x].value = bombNum;
+                    currentBoard[y][x].isFlagged = false;
                 }
             }
         }
@@ -326,7 +334,7 @@ function regenBoard(explode)
         for (let x = 0; x < xMax; x++)
         {
             let txt = currentBoard[y][x].value;
-            if (txt == bombNum) {
+            if (currentBoard[y][x].isBomb) {
                 txt = "B";
             }
             if(currentBoard[y][x].isUncovered)
