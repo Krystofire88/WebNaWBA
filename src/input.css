@@ -33,3 +33,15 @@
 @keyframes startClick3s {
   100%{background-color: rgba(0, 0, 0, 0);color: rgba(0, 0, 0,0);}
 }
+.playBox {
+    width: 40px;
+    height: 40px;
+    background-color: #F8F2DC;
+    border-color: black;
+    border-width: 2px;
+    position:relative;
+    border-color: #E4AEA2;
+    border-style:solid;
+    border-radius: 5px;
+    box-sizing: border-box;
+}

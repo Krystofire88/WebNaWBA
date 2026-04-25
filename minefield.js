@@ -75,8 +75,8 @@ function initFlagsTime()
 
     timerInterval = setInterval(() => {
         time++;
-        timeDisplay.textContent = "Time elapsed: " + time;
-    }, 1000);
+        timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
+    }, 10);
 }
 
 function generateBombs() {
@@ -157,6 +157,8 @@ function initField() {
             playingField.appendChild(box);
         }
     }
+    playingField.style.width=`${xMax*40}px`;
+    playingField.style.height=`${yMax*40}px`;
 }
 
 function clickedRevealBox(id) {
@@ -326,6 +328,7 @@ function regenBoard(explode)
             }
             if(currentBoard[y][x].isUncovered)
             {
+                playingField.children[y * xMax + x].style.backgroundColor = "#E8E2CC";
                 playingField.children[y * xMax + x].innerHTML = tileImages[txt];
             }
         }
