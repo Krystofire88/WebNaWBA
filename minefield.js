@@ -162,7 +162,14 @@ function initField() {
 function clickedRevealBox(id) {
     firstClick = false;
     boxClicked = id;
-    generateField();
+    while(true)
+    {
+        generateField();
+        if(currentBoard[id[0]][id[1]].value == 0)
+        {
+            break;
+        }
+    }
     currentBoard[id[0]][id[1]].isUncovered = true;
     revealNear(id);
     regenBoard(false);
@@ -308,10 +315,8 @@ function regenBoard(explode)
                 if (currentBoard[y][x].isBomb)
                 {
                     currentBoard[y][x].isUncovered = true;
-                    if(currentBoard[y][x].value == 25)
-                    {
-                        currentBoard[y][x].value = bombNum;
-                    }
+                    console.log(currentBoard[y][x].value);                 
+                    currentBoard[y][x].value = bombNum;
                 }
             }
         }
@@ -422,6 +427,7 @@ const tileImages = {
     "B": '<img src="assets/bomb.png">',
     "F": '<img src="assets/flag.png">',
     0:   '<img src="assets/zero.png">',
+    1:   '<img src="assets/one.png">',
     1:   '<img src="assets/one.png">',
     2:   '<img src="assets/two.png">',
     3:   '<img src="assets/three.png">',
