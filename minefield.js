@@ -13,6 +13,9 @@ let flagsLeft = null;
 let time = 0;
 let timerInterval = null;
 
+let canClick = true;
+let pauseTime = false;
+
 const bombNum = 0x09;
 
 class Tile
@@ -72,11 +75,6 @@ function initFlagsTime()
     if (timerInterval !== null) {
         clearInterval(timerInterval);
     }
-
-    timerInterval = setInterval(() => {
-        time++;
-        timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
-    }, 10);
 }
 
 function generateBombs() {
@@ -159,9 +157,11 @@ function initField() {
     }
     playingField.style.width=`${xMax*40}px`;
     playingField.style.height=`${yMax*40}px`;
+    pauseTime = false;
 }
 
 function clickedRevealBox(id) {
+    if(!canClick) return;
     firstClick = false;
     boxClicked = id;
     while(true)
@@ -172,15 +172,25 @@ function clickedRevealBox(id) {
             break;
         }
     }
+    timerInterval = setInterval(() => {
+        if(pauseTime) return;
+        time++;
+        timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
+    }, 10);
+    // window.onbeforeunload = function() {
+    //     return true;
+    //  };
+    document.getElementById("game-end-text").textContent = "";
     currentBoard[id[0]][id[1]].isUncovered = true;
     revealNear(id);
     regenBoard(false);
 }
 
 function clickedBox(id) {
+    if(!canClick) return;
     if(currentBoard[id[0]][id[1]].isFlagged) return;
     else if (currentBoard[id[0]][id[1]].isBomb) {
-        lose()
+        endGame(false)
     }
     else if (currentBoard[id[0]][id[1]].isUncovered == false)
     {
@@ -225,7 +235,7 @@ function autoUncover(id)
                     {
                         if(currentBoard[id[0] + dir[0]][id[1] + dir[1]].isBomb)
                         {
-                            lose();
+                            endGame(false);
                         }
                         currentBoard[id[0] + dir[0]][id[1] + dir[1]].isUncovered = true;
                         if (currentBoard[id[0] + dir[0]][id[1] + dir[1]].value == 0) {
@@ -239,15 +249,32 @@ function autoUncover(id)
     }
 }
 
-function lose()
+function endGame(win)
 {
+    canClick = false;
+    pauseTime = true;
     regenBoard(true);
-    document.getElementById("title").style.color = "red";
-    setTimeout(() => { 
-        window.alert("GAME OVER");
-        resetBoard();     
-    }, 100);
+    let score = Math.floor(time / 6000) + ":" + (Math.floor((time % 6000) / 100).toString().length === 2 ? Math.floor((time % 6000) / 100) : "0" + Math.floor((time % 6000) / 100)) + "." + ((time % 100).toString().length === 2 ? time % 100 : "0" + (time % 100));
+    if(win)
+    {
+        document.getElementById("title").style.color = "green";   
+        document.getElementById("game-end-text").innerText = `You win! Time: ${score}`
+    }
+    else
+    {
+        document.getElementById("title").style.color = "red";   
+        document.getElementById("game-end-text").innerText = "You Lost! Game Over!"
+    } 
+    document.getElementById("continue-button").style = "display:content;"
 }
+
+function continueGame()
+{
+    time = 1;
+    canClick = true;
+    document.getElementById("continue-button").style = "display:none;"
+    resetBoard();
+}    
 
 function checkWin()
 {
@@ -259,27 +286,13 @@ function checkWin()
             if(!currentBoard[y][x].isUncovered) return;
         }
     }
-    win();
-}
-
-function win()
-{
-    regenBoard(true);
-    setTimeout(() => {
-        console.log("Runs after 2 seconds");
-    }, 2000);
-    document.getElementById("title").style.color = "green";
-    setTimeout(() => {
-        console.log("Runs after 2 seconds");
-    }, 2000);
-    setTimeout(() => {
-        window.alert("You Win");
-        resetBoard();     
-    }, 100);
+    endGame(true);
 }
 
 function resetBoard()
 {
+    time -= 1;
+    timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
     document.getElementById("title").style.color = "white";
     for (let y = 0; y < yMax; y++)
     {
