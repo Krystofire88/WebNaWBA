@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./src/output.css">
     <script src="minefield.js"></script>
     <title>Minesweeper</title>
 </head>
-<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(24,minmax(0,5.05vh))] md:grid-rows-[repeat(24,minmax(0,6.348vh))] overflow-hidden">
-        <h1
-        id="title" class="drop-shadow-[0_3.5px_1.2px_rgba(70,60,0,0.55)] font-[Minesweeper] ml-[0.2%] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center mt-[-3.3vh] md:mt-[-0.45vh] md:text-8xl">
+<body class="font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(32,minmax(0,3.122vh))] md:grid-rows-[repeat(32,minmax(0,3.122vh))] overflow-hidden">
+        <h1 id="title" onclick="window.location.href='./'"
+        class="drop-shadow-[0_3.5px_1.2px_rgba(70,60,0,0.55)] font-[Minesweeper] ml-[0.2%] text-7xl tracking-[4%] text-[#F8F2DC] p-8 col-span-full row-start-2 text-center mt-[-3.3vh] md:mt-[-5vh] md:text-8xl">
         Minesweeper</h1>
-        <div class="col-start-2 text-xl col-span-3 row-start-5 row-span-1 rounded-sm bg-[#F8F2DC] text-center">
-            <h3 id="timeDisplay">Time elapsed: 0</h3>
+        <div class="col-start-2 md:col-start-2 text-2xl col-span-7 md:col-span-3 row-start-4 row-span-1 rounded-2xl bg-[#F8F2DC] flex justify-center items-center">
+            <h3 id="timeDisplay">0:00.00</h3>
         </div>
-        <div class="col-start-13 text-xl col-span-3 row-start-5 row-span-1 rounded-sm bg-[#F8F2DC] text-center">
+        <div class="col-start-13 md:col-start-14 text-2xl col-span-4 md:col-span-2 row-start-4 row-span-1 rounded-2xl bg-[#F8F2DC]">
+            <button class="w-full h-full flex justify-center items-center" id="play-pause" onclick="togglePlay()">Pause</button> 
             <audio id="audio">
                 <source src="" name="musicplayer" type="audio/mpeg">
             </audio>
-            <button class="w-full h-full text-center pb-8" id="play-pause" onclick="togglePlay()">Pause</button> 
+            
         </div>
-        <div class="col-start-24 text-xl col-span-3 row-start-5 row-span-1 rounded-sm bg-[#F8F2DC] text-center">
+        <div class="col-start-21 md:col-start-25 text-2xl col-span-7 md:col-span-3 row-start-4 row-span-1 rounded-2xl bg-[#F8F2DC] flex justify-center items-center">
             <h3 id="flagsLeft">Flags Left: </h3>
         </div>
-        <div class="bg-[#7E2828] col-start-2 col-span-25 row-start-6 row-span-12 rounded-sm">
-        </div>
-        <div class="bg-[#E4AEA2] col-start-3 col-span-23 row-start-7 row-span-10 rounded-sm">
-            <div class="self-center" id="playingField"></div>
+        <!-- <div class="bg-[#7E2828] col-start-2 col-span-25 row-start-6 row-span-25 rounded-2xl">
+        </div> -->
+        <div class="border-solid border-20 border-[#7E2828] bg-[#E4AEA2] col-start-2 col-span-26 row-start-6 row-span-26 rounded-2xl flex justify-center items-center overflow-scroll">
+            <div id="playingField" style="height: 400px;"></div>
         </div>
 </body>
 </html>
