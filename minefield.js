@@ -180,7 +180,7 @@ function clickedRevealBox(id) {
     window.onbeforeunload = function() {
         return true;
      };
-    document.getElementById("game-end-text").textContent = 
+    document.getElementById("game-end-text").textContent = "";
     currentBoard[id[0]][id[1]].isUncovered = true;
     revealNear(id);
     regenBoard(false);
