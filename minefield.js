@@ -177,10 +177,10 @@ function clickedRevealBox(id) {
         time++;
         timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
     }, 10);
-    // window.onbeforeunload = function() {
-    //     return true;
-    //  };
-    document.getElementById("game-end-text").textContent = "";
+    window.onbeforeunload = function() {
+        return true;
+     };
+    document.getElementById("game-end-text").textContent = 
     currentBoard[id[0]][id[1]].isUncovered = true;
     revealNear(id);
     regenBoard(false);
