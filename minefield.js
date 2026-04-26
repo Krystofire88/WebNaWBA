@@ -255,6 +255,7 @@ function endGame(win)
     pauseTime = true;
     regenBoard(true);
     let score = Math.floor(time / 6000) + ":" + (Math.floor((time % 6000) / 100).toString().length === 2 ? Math.floor((time % 6000) / 100) : "0" + Math.floor((time % 6000) / 100)) + "." + ((time % 100).toString().length === 2 ? time % 100 : "0" + (time % 100));
+    document.getElementById("game-end-text").style = "display:content;"
     if(win)
     {
         document.getElementById("title").style.color = "green";   
@@ -273,6 +274,7 @@ function continueGame()
     time = 1;
     canClick = true;
     document.getElementById("continue-button").style = "display:none;"
+    document.getElementById("game-end-text").style = "display:none;"
     resetBoard();
 }    
 
