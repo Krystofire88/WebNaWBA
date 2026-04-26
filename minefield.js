@@ -164,7 +164,7 @@ function clickedRevealBox(id) {
     if(!canClick) return;
     firstClick = false;
     boxClicked = id;
-    while(true)
+    for(let i = 0; i < 100; i++)
     {
         generateField();
         if(currentBoard[id[0]][id[1]].value == 0)
