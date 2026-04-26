@@ -357,6 +357,7 @@ function regenBoard(explode)
             if(currentBoard[y][x].isUncovered)
             {
                 playingField.children[y * xMax + x].style.backgroundColor = "#E8E2CC";
+                if(txt == 0) continue;
                 playingField.children[y * xMax + x].innerHTML = tileImages[txt];
             }
         }
@@ -452,14 +453,12 @@ function togglePlay() {
 const tileImages = {
     "B": '<img src="assets/bomb.png">',
     "F": '<img src="assets/flag.png">',
-    0:   '<img src="assets/zero.png">',
-    1:   '<img src="assets/one.png">',
-    1:   '<img src="assets/one.png">',
-    2:   '<img src="assets/two.png">',
-    3:   '<img src="assets/three.png">',
-    4:   '<img src="assets/four.png">',
-    5:   '<img src="assets/five.png">',
-    6:   '<img src="assets/six.png">',
-    7:   '<img src="assets/seven.png">',
-    8:   '<img src="assets/eight.png">',
+    1:   '<img src="assets/dessert_numbers_1.png">',
+    2:   '<img src="assets/dessert_numbers_2.png">',
+    3:   '<img src="assets/dessert_numbers_3.png">',
+    4:   '<img src="assets/dessert_numbers_4.png">',
+    5:   '<img src="assets/dessert_numbers_5.png">',
+    6:   '<img src="assets/dessert_numbers_6.png">',
+    7:   '<img src="assets/dessert_numbers_7.png">',
+    8:   '<img src="assets/dessert_numbers_8.png">',
 };
