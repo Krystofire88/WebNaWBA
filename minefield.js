@@ -357,7 +357,11 @@ function regenBoard(explode)
             if(currentBoard[y][x].isUncovered)
             {
                 playingField.children[y * xMax + x].style.backgroundColor = "#E8E2CC";
-                if(txt == 0) continue;
+                if(txt == 0)
+                {
+                    playingField.children[y * xMax + x].style.backgroundColor = "#E2DDC7";
+                    continue;
+                }
                 playingField.children[y * xMax + x].innerHTML = tileImages[txt];
             }
         }
