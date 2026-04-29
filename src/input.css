@@ -45,3 +45,9 @@
     border-radius: 5px;
     box-sizing: border-box;
 }
+
+@layer base {
+  h1, div {
+    @apply text-lg md:text-2xl xl:text-3xl
+  }
+}
