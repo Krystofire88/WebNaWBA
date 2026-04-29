@@ -10,11 +10,12 @@ let firstClick = true;
 let playingField = null;
 let timeDisplay = null;
 let flagsLeft = null;
-let time = 0;
 let timerInterval = null;
+let elapsed = 0;
+let isRunning = false;
+let startTime = 0;
 
 let canClick = true;
-let pauseTime = false;
 
 const bombNum = 0x09;
 
@@ -64,6 +65,34 @@ document.addEventListener("DOMContentLoaded", () => {
     initFlagsTime();
     generateField();
 });
+
+function startTimer() {
+    clearInterval(timerInterval);
+    startTime = 0;
+    elapsed = 0;
+    isRunning = true;
+    startTime = Date.now() - elapsed;
+    timerInterval = setInterval(updateTimer, 50); 
+}
+
+function pauseTimer() {
+    isRunning = false;
+    clearInterval(timerInterval);
+    elapsed = Date.now() - startTime;
+}
+
+function updateTimer() {
+    if (!isRunning) return;
+
+    elapsed = Date.now() - startTime;
+    timeDisplay.textContent = getTime(elapsed);
+}
+
+function getTime(time)
+{
+    if(time == null) return "0:00.00";
+    return Math.floor(time / 60000) + ":" + (Math.floor((time % 60000) / 1000)).toString().padStart(2, '0') + "." + (Math.floor((time % 1000) / 10)).toString().padStart(2, '0');
+}
 
 function initFlagsTime()
 {
@@ -172,11 +201,9 @@ function clickedRevealBox(id) {
             break;
         }
     }
-    timerInterval = setInterval(() => {
-        if(pauseTime) return;
-        time++;
-        timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
-    }, 10);
+    timeDisplay.textContent = "0:00.00"
+    startTimer();
+    timeDisplay.textContent = getTime();
     window.onbeforeunload = function() {
         return true;
      };
@@ -251,10 +278,10 @@ function autoUncover(id)
 
 function endGame(win)
 {
+    pauseTimer();
     canClick = false;
-    pauseTime = true;
     regenBoard(true);
-    let score = Math.floor(time / 6000) + ":" + (Math.floor((time % 6000) / 100).toString().length === 2 ? Math.floor((time % 6000) / 100) : "0" + Math.floor((time % 6000) / 100)) + "." + ((time % 100).toString().length === 2 ? time % 100 : "0" + (time % 100));
+    let score = document.getElementById("timeDisplay").textContent;
     document.getElementById("game-end-text").style = "display:content;"
     if(win)
     {
@@ -271,7 +298,7 @@ function endGame(win)
 
 function continueGame()
 {
-    time = 1;
+    elapsed = 0;
     canClick = true;
     document.getElementById("continue-button").style = "display:none;"
     document.getElementById("game-end-text").style = "display:none;"
@@ -293,8 +320,7 @@ function checkWin()
 
 function resetBoard()
 {
-    time -= 1;
-    timeDisplay.textContent = `${Math.floor(time/6000)}:${(Math.floor(time%6000/100)).toString().length == 2 ? Math.floor(time%6000/100) : "0"+Math.floor(time%6000/100)}.${((time%100).toString().length==2 ? time%100 :"0"+time%100)}`;
+    getTime(elapsed     )
     document.getElementById("title").style.color = "white";
     for (let y = 0; y < yMax; y++)
     {
@@ -359,7 +385,7 @@ function regenBoard(explode)
                 playingField.children[y * xMax + x].style.backgroundColor = "#E8E2CC";
                 if(txt == 0)
                 {
-                    playingField.children[y * xMax + x].style.backgroundColor = "#E2DDC7";
+                    playingField.children[y * xMax + x].style.backgroundColor = "#D0CBB7";
                     continue;
                 }
                 playingField.children[y * xMax + x].innerHTML = tileImages[txt];
