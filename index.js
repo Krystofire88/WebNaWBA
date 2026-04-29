@@ -58,9 +58,9 @@ class CustomPicker extends HTMLElement {
         this.listItem.style.borderRadius = "8px";
         this.listItem.style.color = "#7E2828";
         this.listItem.style.fontFamily = "Inter";
-        this.listItem.style.fontSize = "32px";
+        this.listItem.style.fontSize = "24px";
         this.listItem.style.letterSpacing = "5%";
-        this.listItem.style.width = "40vw";
+        this.listItem.style.width = "100%";
         this.listItem.style.height = "64px";
         this.listItem.style.textAlign = "center";
         // this.listItem.style.display = this.state ? "none" : "flex";
@@ -75,9 +75,9 @@ class CustomPicker extends HTMLElement {
         this.backdrop.style.borderBottomLeftRadius = "8px";
         this.backdrop.style.color = "#000000";
         this.backdrop.style.fontFamily = "Inter";
-        this.backdrop.style.fontSize = "32px";
+        this.backdrop.style.fontSize = "24px";
         this.backdrop.innerText = "Select song...";
-        this.backdrop.style.width = "40vw";
+        this.backdrop.style.width = "100%";
         this.backdrop.style.height = "64px";
         this.backdrop.style.textAlign = "center";
         this.backdrop.style.display = "flex";
@@ -87,8 +87,7 @@ class CustomPicker extends HTMLElement {
         this.pickArrow.style.width = "64px";
         this.pickArrow.style.height = "64px";
         this.pickArrow.style.position = "absolute";
-        this.pickArrow.style.marginTop = "-64px";
-        this.pickArrow.style.marginLeft = "39vw";
+        this.pickArrow.style.marginLeft = "105%";
         this.pickArrow.style.display = "flex";
         this.pickArrow.style.justifyItems = "center";
         this.pickArrow.style.alignItems = "center";
@@ -142,7 +141,7 @@ class CustomPicker extends HTMLElement {
         })
         this.pickArrow.appendChild(this.pickArrowIcon);
         this.shadow.appendChild(this.backdrop);
-        this.shadow.appendChild(this.pickArrow);
+        this.backdrop.appendChild(this.pickArrow);
         for (let i = 0; i < CustomPicker.songList.length; i++) {
             const x = this.listItem.cloneNode(true);
             x.innerText = CustomPicker.songList[i];
@@ -209,7 +208,7 @@ class CustomRange extends HTMLElement {
         this.backdrop.style.borderBottomLeftRadius = "8px";
         this.backdrop.style.color = "#000000";
         this.backdrop.style.fontFamily = "Inter";
-        this.backdrop.style.fontSize = "48px";
+        this.backdrop.style.fontSize = "42px";
         this.backdrop.style.width = "120px";
         this.backdrop.style.height = "64px";
         this.backdrop.style.boxSizing="border-box"

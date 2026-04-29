@@ -186,6 +186,8 @@ function initField() {
     }
     playingField.style.width=`${xMax*40}px`;
     playingField.style.height=`${yMax*40}px`;
+    playingField.parentElement.clientWidth < playingField.clientWidth ? {} : playingField.parentElement.classList.add("justify-center");
+    playingField.parentElement.clientHeight < playingField.clientHeight ? {} : playingField.parentElement.classList.add("items-center");
     pauseTime = false;
 }
 
