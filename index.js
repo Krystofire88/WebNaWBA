@@ -14,7 +14,7 @@ function bombPercent() {
 
 class CustomPicker extends HTMLElement {
     static observedAttributes = ["color", "size", "value"];
-    static songList = ["Caramella Girls - Caramelldansen", "Muhamed Brkić Hamo - Bosanska Artiljerija", ""];
+    static songList = ["Caramella Girls - Caramelldansen", "Bosanska Artiljerija"];
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: "closed" });
@@ -23,8 +23,11 @@ class CustomPicker extends HTMLElement {
         this.pickArrowIcon = document.createElement("img");
         this.listItem = document.createElement("div");
         this.stylepoop = document.createElement("style");
+        this.songtTitle = document.createElement("p");
+        this.par = document.createElement("div");
     }
-
+    par = "";
+    songtTitle = "";
     shadow = "";
     backdrop = "";
     pickArrow = "";
@@ -39,6 +42,7 @@ class CustomPicker extends HTMLElement {
 
         this.stylepoop.textContent = `
       .hover {
+      cursor: pointer;
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
@@ -53,6 +57,7 @@ class CustomPicker extends HTMLElement {
   
   }
     `;
+    this.par.style = "gap:0px;display:flex;flex-direction:row;justify-items:center;align-items:center;width:110%;height:100%;flex-wrap:nowrap;";
         this.shadow.appendChild(this.stylepoop);
         this.listItem.style.backgroundColor = "#F8F2DC";
         this.listItem.style.borderRadius = "8px";
@@ -69,14 +74,19 @@ class CustomPicker extends HTMLElement {
         this.listItem.style.filter = "drop-shadow(0 7px 5px rgba(0,0,0,0.5))";
         this.listItem.classList.add("listItem");
         this.listItem.classList.add("hover");
+        
+        this.songtTitle.style.color = "#7E2828";
+        this.songtTitle.style.fontFamily = "Inter";
+        this.songtTitle.style.fontSize = "24px";
+        this.songtTitle.innerText = "Select song...";
 
         this.backdrop.style.backgroundColor = "#F8F2DC";
         this.backdrop.style.borderTopLeftRadius = "8px";
         this.backdrop.style.borderBottomLeftRadius = "8px";
-        this.backdrop.style.color = "#000000";
+        this.backdrop.style.color = "#7E2828";
         this.backdrop.style.fontFamily = "Inter";
         this.backdrop.style.fontSize = "24px";
-        this.backdrop.innerText = "Select song...";
+        //this.backdrop.innerText = "Select song...";
         this.backdrop.style.width = "100%";
         this.backdrop.style.height = "64px";
         this.backdrop.style.textAlign = "center";
@@ -86,9 +96,10 @@ class CustomPicker extends HTMLElement {
         this.pickArrow.style.backgroundColor = "#7E2828";
         this.pickArrow.style.width = "64px";
         this.pickArrow.style.height = "64px";
-        this.pickArrow.style.position = "absolute";
-        this.pickArrow.style.marginLeft = "105%";
+        //this.pickArrow.style.position = "absolute";
+        //this.pickArrow.style.marginLeft = "105%";
         this.pickArrow.style.display = "flex";
+        this.pickArrow.style.flexShrink="0";
         this.pickArrow.style.justifyItems = "center";
         this.pickArrow.style.alignItems = "center";
         this.pickArrow.style.borderTopRightRadius = "8px";
@@ -124,6 +135,7 @@ class CustomPicker extends HTMLElement {
 
             this.stylepoop.textContent = `
       .hover {
+      cursor: pointer;
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);
@@ -140,13 +152,15 @@ class CustomPicker extends HTMLElement {
     `;
         })
         this.pickArrow.appendChild(this.pickArrowIcon);
-        this.shadow.appendChild(this.backdrop);
-        this.backdrop.appendChild(this.pickArrow);
+        this.par.appendChild(this.backdrop);
+        this.par.appendChild(this.pickArrow);
+        this.backdrop.appendChild(this.songtTitle);
+        this.shadow.appendChild(this.par);
         for (let i = 0; i < CustomPicker.songList.length; i++) {
             const x = this.listItem.cloneNode(true);
             x.innerText = CustomPicker.songList[i];
             x.addEventListener("mousedown", () => {
-                this.backdrop.innerText = x.innerText; this.setAttribute("value", i);
+                this.songtTitle.innerText = x.innerText; this.setAttribute("value", i);
             })
             this.shadow.appendChild(x);
         }
@@ -156,7 +170,7 @@ class CustomPicker extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (name == "value") {
             this.value = newValue;
-            this.backdrop.innerText = CustomPicker.songList[newValue];
+            this.songtTitle.innerText = CustomPicker.songList[newValue];
             this.dispatchEvent(this.changed);
         }
     }
@@ -191,6 +205,7 @@ class CustomRange extends HTMLElement {
 
         style.textContent = `
       .hover {
+      cursor: pointer;
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function:cubic-bezier(0, 0, 0.18, 1.82);

@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     backgroundMusic = document.getElementById("audio");
     playPause = document.getElementById("play-pause");
     backgroundMusic.setAttribute("src",`src/music/${bgm}.mp3`);
-    backgroundMusic.play();
+    backgroundMusic.play().catch((e)=>{ playPause.textContent = "Play";});
     backgroundMusic.muted = false;
     backgroundMusic.volume = 0.1;
     initFlagsTime();
@@ -97,7 +97,7 @@ function getTime(time)
 function initFlagsTime()
 {
     flagCount = bCount;
-    flagsLeft.textContent = "Flags left: " + flagCount;
+    flagsLeft.textContent = " left: " + flagCount;
 
     time = 0;
 
@@ -186,8 +186,8 @@ function initField() {
     }
     playingField.style.width=`${xMax*40}px`;
     playingField.style.height=`${yMax*40}px`;
-    playingField.parentElement.clientWidth < playingField.clientWidth ? {} : playingField.parentElement.classList.add("justify-center");
-    playingField.parentElement.clientHeight < playingField.clientHeight ? {} : playingField.parentElement.classList.add("items-center");
+    playingField.parentElement.clientWidth > playingField.clientWidth ? playingField.parentElement.classList.add("items-center") : {};
+    playingField.parentElement.clientHeight > playingField.clientHeight ? playingField.parentElement.classList.add("justify-center") : {};
     pauseTime = false;
 }
 
@@ -284,18 +284,20 @@ function endGame(win)
     canClick = false;
     regenBoard(true);
     let score = document.getElementById("timeDisplay").textContent;
-    document.getElementById("game-end-text").style = "display:content;"
+    let title = document.getElementById("title");
+    let endText = document.getElementById("game-end-text");
+    document.getElementById("continue-button").style = "display:content;";
+    endText.style = "display:content;";
     if(win)
     {
-        document.getElementById("title").style.color = "green";   
-        document.getElementById("game-end-text").innerText = `You win! Time: ${score}`
+        title.style.color = "green";   
+        endText.innerText = `You win! Time: ${score}`;
     }
     else
     {
-        document.getElementById("title").style.color = "red";   
-        document.getElementById("game-end-text").innerText = "You Lost! Game Over!"
+        title.style.color = "red";   
+        endText.innerText = "You Lost! Game Over!";
     } 
-    document.getElementById("continue-button").style = "display:content;"
 }
 
 function continueGame()
@@ -402,13 +404,13 @@ function makeFlag(id) {
         currentBoard[id[0]][id[1]].isFlagged = true;
         boxDiv.innerHTML = tileImages["F"];
         flagCount--;
-        flagsLeft.textContent = "Flags left: " + flagCount;
+        flagsLeft.textContent = " left: " + flagCount;
     }
     else if (currentBoard[id[0]][id[1]].isFlagged) {
         currentBoard[id[0]][id[1]].isFlagged = false;
         boxDiv.innerText = " ";
         flagCount++;
-        flagsLeft.textContent = "Flags left:" + flagCount;
+        flagsLeft.textContent = " left:" + flagCount;
     } else {
         console.warn(currentBoard[id[0]][id[1]].value)
         console.warn((currentBoard[id[0]][id[1]].value & 0x10))
