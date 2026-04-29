@@ -30,7 +30,7 @@
                 <label for="bombs" class="text-base sm:text-2xl md:text-3xl font-[Geomatrix] whitespace-nowrap ">
                     Mines:
                 </label>
-                <custom-range min="0" value="20" id="bombs" class="flex-1 min-w-0"></custom-range>
+                <custom-range min="0" value="20" id="bombs" class="flex-1 min-w-0 scale-80"></custom-range>
             </div>
                 <div class="flex items-center gap-3 w-full sm:flex-1">
                     <output id="bomb%" class="text-base sm:text-2xl md:text-3xl font-[Geomatrix] "></output>
@@ -46,13 +46,13 @@
                         <label for="yWidth" class="text-base sm:text-2xl md:text-3xl font-[Geomatrix] whitespace-nowrap ">
                             Rows:
                         </label>
-                        <custom-range min="1" value="10" id="yWidth" class="flex-1 min-w-0"></custom-range>
+                        <custom-range min="1" value="10" id="yWidth" class="flex-1 min-w-0 scale-80"></custom-range>
                     </div>
                     <div class="flex items-center gap-3 w-full sm:flex-1">
                         <label for="xWidth" class="text-base sm:text-2xl md:text-3xl font-[Geomatrix] whitespace-nowrap ">
                             Columns:
                         </label>
-                        <custom-range min="1" value="10" id="xWidth" class="flex-1 min-w-0"></custom-range>
+                        <custom-range min="1" value="10" id="xWidth" class="flex-1 min-w-0 scale-80"></custom-range>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
         <!-- BGM row -->
         <div class="bg-[#e4aea2] flex items-center gap-3 min-w-0 w-full rounded-xl px-4 py-3 min-h-1/3">
             <p class="text-[#7E2828] text-base sm:text-lg md:text-xl font-[Geomatrix] ">BGM</p>
-            <custom-picker id="bgm" class="flex-1 min-w-0"></custom-picker>
+            <custom-picker id="bgm" class="flex-1 min-w-0 w-full scale-80"></custom-picker>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
         <!-- Start button -->
         <button type="button" id="start"
             class="font-normal font-[Inter] bg-[#f8f2dc] text-[#7E2828] text-center rounded-xl w-full
-                   drop-shadow-lg/75 transition-transform active:scale-95 hover:brightness-95
+                   drop-shadow-lg/75
                    text-4xl sm:text-5xl md:text-6xl lg:text-7xl
                    py-5 sm:py-6 md:py-7
                    tracking-widest">
