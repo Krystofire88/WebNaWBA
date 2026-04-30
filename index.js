@@ -300,7 +300,7 @@ class CustomRange extends HTMLElement {
 function animRedir(index, duration, timing) {
     startButton.style.animationName = `startClick${index.toString()}`; startButton.style.animationDuration = `${duration.toString()}ms`; startButton.style.animationTimingFunction = timing;
     setTimeout(() => {
-        window.location.href = `/minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
+        window.location.href = `minefield.html?bombs=${bombs.value}&yWidth=${yWidth.value}&xWidth=${xWidth.value}&bgm=${bgm.value}`;
     }, duration-50);
 }
 
