@@ -1,0 +1,21 @@
+{
+  "name": "Minesweeper",
+  "short_name": "Minesweeper",
+  "start_url": "/WebNaWBA/",
+  "scope": "/WebNaWBA/",
+  "display": "standalone",
+  "background_color": "#E4AEA2",
+  "theme_color": "#7E2828",
+  "icons": [
+    {
+      "src": "/WebNaWBA/assets/bomb.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/WebNaWBA/assets/bomb.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/output.css">
     <script src="minefield.js"></script>
+    <link rel="manifest" href="/WebNaWBA/manifest.json">
+    <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("/WebNaWBA/sw.js");</script>
     <title>Minesweeper</title>
 </head>
 <body class="overflow-hidden text-center font-[Geomatrix] bg-[#E4AEA2] grid grid-cols-28 grid-rows-[repeat(32,minmax(0,3.122vh))] md:grid-rows-[repeat(32,minmax(0,3.122vh))] overflow-hidden">
