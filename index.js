@@ -9,7 +9,7 @@ function bombPercent() {
     if (Number(bombs.value) > Number(bombs.max)) {
         bombs.setAttribute("value", bombs.max.toString());
     }
-    document.getElementById("bomb%").innerHTML = "Density: " + (bombs.value / (xWidth.value * yWidth.value) * 100).toFixed(2) + "%";
+    document.getElementById("bomb%").innerHTML =(bombs.value / (xWidth.value * yWidth.value) * 100).toFixed(2) + "%";
 }
 
 class CustomPicker extends HTMLElement {
