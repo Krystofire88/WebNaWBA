@@ -1,4 +1,4 @@
-const CACHE_NAME = "minesweeper-v1";
+const CACHE_NAME = "minesweeper-v2";
 const FILES_TO_CACHE = [
     "/WebNaWBA/",
     "/WebNaWBA/index.html",
@@ -9,6 +9,8 @@ const FILES_TO_CACHE = [
     "/WebNaWBA/src/output.css",
     "/WebNaWBA/assets/bomb.png",
     "/WebNaWBA/assets/flag.png",
+    "/WebNaWBA/assets/icon-192.png",
+    "/WebNaWBA/assets/icon-256.png",
     "/WebNaWBA/assets/dessert_numbers_1.png",
     "/WebNaWBA/assets/dessert_numbers_2.png",
     "/WebNaWBA/assets/dessert_numbers_3.png",
