@@ -8,7 +8,6 @@
   "theme_color": "#7E2828",
   "icons": [
     {
-<<<<<<< HEAD
       "src": "/WebNaWBA/assets/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
@@ -16,10 +15,6 @@
     {
       "src": "/WebNaWBA/assets/icon-512.png",
       "sizes": "512x512",
-=======
-      "src": "/WebNaWBA/assets/bomb.png",
-      "sizes": "any",
->>>>>>> 9ea8e4b467358dd41daa2158a5f8432607319761
       "type": "image/png"
     }
   ]
