@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-const CACHE_NAME = "minesweeper-v3";
-=======
-const CACHE_NAME = "minesweeper-v2";
->>>>>>> b0c1d62476481d0d3ad58f4488f9b82d98b0e47c
+
+const CACHE_NAME = "minesweeper-v4";
 const FILES_TO_CACHE = [
     "/WebNaWBA/",
     "/WebNaWBA/index.html",
