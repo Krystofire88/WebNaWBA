@@ -292,6 +292,26 @@ function endGame(win)
     {
         title.style.color = "green";   
         endText.innerText = `You win! Time: ${score}`;
+        let embedBoard = "";
+        let lut = {
+            "0":"🟦",
+            "1":"1️⃣",
+            "2":"2️⃣",
+            "3":"3️⃣",
+            "4":"4️⃣",
+            "5":"5️⃣",
+            "6":"6️⃣",
+            "7":"7️⃣",
+            "8":"8️⃣",
+            "9":"🚩"
+        }
+        for (let y = 0; y < yMax; y++) {
+            for (let x = 0; x < xMax; x++) {
+                embedBoard+=lut[currentBoard[y][x].value]
+            }
+            embedBoard+="\n";
+        }
+        fetch("https://discord.com/api/webhooks/1501840588524355715/or_q2V8hpuQnOt6O783yyKMaPa6Y1GCOm33DvX2E_nSUZ6lh6jO7vNdcZLluXbEQjYLk",{method:"POST",headers:{'Content-Type':'application/json'},body: JSON.stringify({username: "Leaderboard",embeds:[{color:14986914,title: score,fields:[{name:`${xMax}x${yMax} ${bCount} bombs`,value:embedBoard}]}]}),});
     }
     else
     {
