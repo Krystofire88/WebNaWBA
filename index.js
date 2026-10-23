@@ -14,7 +14,7 @@ function bombPercent() {
 
 class CustomPicker extends HTMLElement {
     static observedAttributes = ["color", "size", "value"];
-    static songList = ["Caramella Girls - Caramelldansen", "Bosanska Artiljerija"];
+    static songList = ["Caramella Girls - Caramelldansen", "Bosanska Artiljerija", "Bad Apple"];
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: "closed" });
@@ -54,7 +54,7 @@ class CustomPicker extends HTMLElement {
   transform:scaleY(0.8) scaleX(1);}
   .listItem {
   display: ${this.state ? "none" : "flex"};
-  
+
   }
     `;
     this.par.style = "gap:0px;display:flex;flex-direction:row;justify-items:center;align-items:center;width:110%;height:100%;flex-wrap:nowrap;";
@@ -74,7 +74,7 @@ class CustomPicker extends HTMLElement {
         this.listItem.style.filter = "drop-shadow(0 7px 5px rgba(0,0,0,0.5))";
         this.listItem.classList.add("listItem");
         this.listItem.classList.add("hover");
-        
+
         this.songtTitle.style.color = "#7E2828";
         this.songtTitle.style.fontFamily = "Inter";
         this.songtTitle.style.fontSize = "24px";
@@ -124,11 +124,11 @@ class CustomPicker extends HTMLElement {
 //   transform:scaleY(0.8) scaleX(1);}
 //   .listItem {
 //   display: ${this.state ? "none" : "flex"};
-  
+
 //   }
 //     `;
 //             }
-//         }) 
+//         })
         this.pickArrow.addEventListener("mousedown", () => {
             this.state ^= 1;
             this.pickArrowIcon.style.transform = `rotate(${(180 * this.state).toString()}deg)`;
@@ -147,7 +147,7 @@ class CustomPicker extends HTMLElement {
   transform:scaleY(0.8) scaleX(1);}
   .listItem {
   display: ${this.state ? "none" : "flex"};
-  
+
   }
     `;
         })

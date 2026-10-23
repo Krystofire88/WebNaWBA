@@ -6,6 +6,8 @@ let bCount = null;
 let flagCount = null;
 let boxClicked = [0, 0];
 let firstClick = true;
+let apple = false;
+let appleText = null;
 
 let playingField = null;
 let timeDisplay = null;
@@ -62,7 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
     backgroundMusic.play().catch((e)=>{ playPause.textContent = "Play";});
     backgroundMusic.muted = false;
     backgroundMusic.volume = 0.1;
-    initFlagsTime();
+   if (bgm == 2) {
+     apple = true;
+    }
+
+  initFlagsTime();
     generateField();
 });
 
@@ -72,7 +78,7 @@ function startTimer() {
     elapsed = 0;
     isRunning = true;
     startTime = Date.now() - elapsed;
-    timerInterval = setInterval(updateTimer, 50); 
+    timerInterval = setInterval(updateTimer, 50);
 }
 
 function pauseTimer() {
@@ -136,7 +142,7 @@ function fillNumbers() {
             let bombsNear = 0;
             for (let i = 0; i < 8; i++) {
                 let dir = directionSwitch(i);
-                if (currentBoard[y + dir[0]]?.[x + dir[1]] != null) // '?.' <= poradilo chatGPT  
+                if (currentBoard[y + dir[0]]?.[x + dir[1]] != null) // '?.' <= poradilo chatGPT
                 {
                     if (currentBoard[y + dir[0]][x + dir[1]].isBomb) {
                         bombsNear++;
@@ -159,9 +165,13 @@ function generateBoard() {
             col.push(0);
         }
     });
+  if (apple) {
+  }
+  else {
     generateBombs();
     console.log(currentBoard);
     fillNumbers();
+  }
 }
 
 function initField() {
@@ -177,7 +187,7 @@ function initField() {
                 box.addEventListener("click", () => clickedRevealBox(thisID));
             }
             else {
-                box.addEventListener("contextmenu", (e) => { e.preventDefault(); makeFlag(thisID); }); // <== "e.preventDefault();" chatGPT code 
+                box.addEventListener("contextmenu", (e) => { e.preventDefault(); makeFlag(thisID); }); // <== "e.preventDefault();" chatGPT code
                 box.addEventListener("click", () => clickedBox(thisID));
             }
             box.innerText = " ";
@@ -232,7 +242,7 @@ function clickedBox(id) {
     {
         autoUncover(id);
         regenBoard(false);
-        checkWin(); 
+        checkWin();
     }
 }
 
@@ -290,7 +300,7 @@ function endGame(win)
     endText.style = "display:content;";
     if(win)
     {
-        title.style.color = "green";   
+        title.style.color = "green";
         endText.innerText = `You win! Time: ${score}`;
         let embedBoard = "";
         let lut = {
@@ -315,9 +325,9 @@ function endGame(win)
     }
     else
     {
-        title.style.color = "red";   
+        title.style.color = "red";
         endText.innerText = "You Lost! Game Over!";
-    } 
+    }
 }
 
 function continueGame()
@@ -327,14 +337,14 @@ function continueGame()
     document.getElementById("continue-button").style = "display:none;"
     document.getElementById("game-end-text").style = "display:none;"
     resetBoard();
-}    
+}
 
 function checkWin()
 {
     for (let y = 0; y < yMax; y++)
     {
-        for (let x = 0; x < xMax; x++) 
-        { 
+        for (let x = 0; x < xMax; x++)
+        {
             if(currentBoard[y][x].isBomb) continue;
             if(!currentBoard[y][x].isUncovered) return;
         }
@@ -348,8 +358,8 @@ function resetBoard()
     document.getElementById("title").style.color = "white";
     for (let y = 0; y < yMax; y++)
     {
-        for (let x = 0; x < xMax; x++) 
-        { 
+        for (let x = 0; x < xMax; x++)
+        {
             currentBoard[y][x].isUncovered = false;
             currentBoard[y][x].isFlagged = false;
         }
@@ -374,7 +384,7 @@ function revealNear(id)
                         let newid = [id[0] + dir[0], id[1] + dir[1]];
                         revealNear(newid);
                     }
-                }   
+                }
             }
         }
     }
@@ -389,14 +399,14 @@ function regenBoard(explode)
             for (let x = 0; x < xMax; x++)
             {
                 if (currentBoard[y][x].isBomb)
-                {           
+                {
                     currentBoard[y][x].isUncovered = true;
                     currentBoard[y][x].isFlagged = false;
                 }
             }
         }
     }
-    for (let y = 0; y < yMax; y++) 
+    for (let y = 0; y < yMax; y++)
     {
         for (let x = 0; x < xMax; x++)
         {
@@ -487,8 +497,13 @@ function generateField() {
     for (let i = 0; i < len; i++) {
         playingField.children[0].remove();
     }
-    generateBoard();
+  generateBoard();
+  if (apple) {
+    initApple();
+  }
+  else {
     initField();
+  }
 }
 
 function togglePlay() {
@@ -497,7 +512,7 @@ function togglePlay() {
         backgroundMusic.play();
         playPause.textContent = "Pause";
     }
-    else 
+    else
     {
         backgroundMusic.pause();
         playPause.textContent = "Play";
@@ -516,3 +531,55 @@ const tileImages = {
     7:   '<img src="assets/dessert_numbers_7.png">',
     8:   '<img src="assets/dessert_numbers_8.png">',
 };
+function initApple() {
+  xApple = 32, yApple = 18;
+
+  for (let y = 0; y < yApple; y++) {
+    for (let x = 0; x < xApple; x++) {
+      const box = document.createElement("div");
+      box.className = "playBox";
+      box.id = y * xApple + x;
+      let thisID = [y, x];
+      box.style.left = x * 40 + "px";
+      box.style.top = (-y) * (40 * (xApple - 1)) + (-x) * 40 + "px";
+      box.innerText = " ";
+      playingField.appendChild(box);
+    }
+  }
+  playingField.style.width = `${xApple * 40}px`;
+  playingField.style.height = `${yApple * 40}px`;
+  playingField.parentElement.clientWidth > playingField.clientWidth ? playingField.parentElement.classList.add("items-center") : {};
+  playingField.parentElement.clientHeight > playingField.clientHeight ? playingField.parentElement.classList.add("justify-center") : {};
+  pauseTime = false;
+
+  const video = document.createElement("video");
+  video.src = "small.mp4";
+  video.muted = true;
+  video.playsInline = true;
+  video.loop = true;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = xApple;
+  canvas.height = yApple;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+  video.play().then(() => {
+     loop = () => {
+      if (playingField.children.length !== xApple * yApple) return;
+      ctx.drawImage(video, 0, 0, xApple, yApple);
+      data = ctx.getImageData(0, 0, xApple, yApple).data;
+      for (let i = 0; i < xApple * yApple; i++) {
+        if (data[i * 4] == 255) {
+          playingField.children[i].style.backgroundColor = "#E8E2CC";
+          playingField.children[i].innerHTML = tileImages["F"];
+        }
+        else {
+          playingField.children[i].style.backgroundColor = "#D0CBB7";
+          playingField.children[i].innerHTML = tileImages["B"];
+        }
+     }
+      video.requestVideoFrameCallback(loop);
+    };
+    video.requestVideoFrameCallback(loop);
+  });
+}
