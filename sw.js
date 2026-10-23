@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "minesweeper-v4";
+const CACHE_NAME = "minesweeper-v5";
 const FILES_TO_CACHE = [
     "/WebNaWBA/",
     "/WebNaWBA/index.html",
