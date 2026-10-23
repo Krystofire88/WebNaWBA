@@ -569,7 +569,7 @@ function initApple() {
       ctx.drawImage(video, 0, 0, xApple, yApple);
       data = ctx.getImageData(0, 0, xApple, yApple).data;
       for (let i = 0; i < xApple * yApple; i++) {
-        if (data[i * 4] == 255) {
+        if (data[i * 4] > 127) {
           playingField.children[i].style.backgroundColor = "#E8E2CC";
           playingField.children[i].innerHTML = tileImages["F"];
         }
